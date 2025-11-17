@@ -1,5 +1,13 @@
 import Link from 'next/link'
-import { Container } from './ui'
+import Box from '@mui/material/Box'
+import Container from '@mui/material/Container'
+import Typography from '@mui/material/Typography'
+import Grid from '@mui/material/Grid'
+import IconButton from '@mui/material/IconButton'
+import MuiLink from '@mui/material/Link'
+import FacebookIcon from '@mui/icons-material/Facebook'
+import InstagramIcon from '@mui/icons-material/Instagram'
+import TwitterIcon from '@mui/icons-material/Twitter'
 
 const footerLinks = {
   'Event Categories': [
@@ -23,91 +31,158 @@ const footerLinks = {
 
 export function Footer() {
   return (
-    <footer className="bg-accent text-white">
+    <Box component="footer" sx={{ bgcolor: 'text.primary', color: 'white' }}>
       <Container>
-        <div className="py-12">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <Box sx={{ py: 6 }}>
+          <Grid container spacing={4}>
             {/* Brand Section */}
-            <div className="lg:col-span-1">
-              <div className="flex items-center space-x-2 mb-4">
-                <div className="bg-primary text-white px-3 py-2 rounded-lg font-bold text-lg">
-                  OnTap
-                </div>
-                <span className="text-white font-semibold text-lg">MN</span>
-              </div>
-              <p className="text-gray-300 text-sm mb-4">
+            <Grid item xs={12} md={6} lg={3}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 2 }}>
+                <Box
+                  component="img"
+                  src="/logos/ontapMNlogo.webp"
+                  alt="OnTap MN Logo"
+                  sx={{
+                    width: 56,
+                    height: 56,
+                    objectFit: 'contain',
+                  }}
+                />
+                <Typography
+                  variant="h6"
+                  component="span"
+                  sx={{ color: 'white', fontWeight: 700, fontSize: '1.5rem' }}
+                >
+                  OnTap MN
+                </Typography>
+              </Box>
+              <Typography
+                variant="body2"
+                sx={{ color: 'grey.300', mb: 2 }}
+              >
                 Find Bar Bingo, Meat Raffles, and More Across Minnesota
-              </p>
-              
+              </Typography>
+
               {/* Social Media Icons */}
-              <div className="flex space-x-4">
-                <a href="#" className="text-gray-300 hover:text-secondary transition-colors">
-                  <span className="sr-only">Facebook</span>
-                  <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                  </svg>
-                </a>
-                <a href="#" className="text-gray-300 hover:text-secondary transition-colors">
-                  <span className="sr-only">Instagram</span>
-                  <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 6.618 5.367 11.986 11.988 11.986s11.987-5.368 11.987-11.986C24.004 5.367 18.635.001 12.017.001zM8.449 16.988c-1.297 0-2.448-.49-3.316-1.296C4.343 14.928 3.9 13.814 3.9 12.6c0-1.215.443-2.329 1.233-3.093.868-.806 2.019-1.296 3.316-1.296s2.448.49 3.316 1.296c.79.764 1.233 1.878 1.233 3.093 0 1.214-.443 2.328-1.233 3.092-.868.806-2.019 1.296-3.316 1.296zm7.718-1.296c-.868.806-2.019 1.296-3.316 1.296s-2.448-.49-3.316-1.296c-.79-.764-1.233-1.878-1.233-3.092 0-1.215.443-2.329 1.233-3.093.868-.806 2.019-1.296 3.316-1.296s2.448.49 3.316 1.296c.79.764 1.233 1.878 1.233 3.093 0 1.214-.443 2.328-1.233 3.092z"/>
-                  </svg>
-                </a>
-                <a href="#" className="text-gray-300 hover:text-secondary transition-colors">
-                  <span className="sr-only">Twitter</span>
-                  <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                  </svg>
-                </a>
-              </div>
-            </div>
+              <Box sx={{ display: 'flex', gap: 2 }}>
+                <IconButton
+                  component="a"
+                  href="#"
+                  sx={{
+                    color: 'grey.300',
+                    '&:hover': { color: 'secondary.main' },
+                  }}
+                  aria-label="Facebook"
+                >
+                  <FacebookIcon />
+                </IconButton>
+                <IconButton
+                  component="a"
+                  href="#"
+                  sx={{
+                    color: 'grey.300',
+                    '&:hover': { color: 'secondary.main' },
+                  }}
+                  aria-label="Instagram"
+                >
+                  <InstagramIcon />
+                </IconButton>
+                <IconButton
+                  component="a"
+                  href="#"
+                  sx={{
+                    color: 'grey.300',
+                    '&:hover': { color: 'secondary.main' },
+                  }}
+                  aria-label="Twitter"
+                >
+                  <TwitterIcon />
+                </IconButton>
+              </Box>
+            </Grid>
 
             {/* Footer Links */}
             {Object.entries(footerLinks).map(([title, links]) => (
-              <div key={title}>
-                <h3 className="text-secondary font-semibold mb-4">{title}</h3>
-                <ul className="space-y-2">
+              <Grid item xs={12} sm={4} md={6} lg={3} key={title}>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    color: 'secondary.main',
+                    fontWeight: 600,
+                    fontSize: '1rem',
+                    mb: 2,
+                  }}
+                >
+                  {title}
+                </Typography>
+                <Box component="ul" sx={{ listStyle: 'none', p: 0, m: 0 }}>
                   {links.map((link) => (
-                    <li key={link.name}>
-                      <Link 
+                    <Box component="li" key={link.name} sx={{ mb: 1 }}>
+                      <MuiLink
+                        component={Link}
                         href={link.href}
-                        className="text-gray-300 hover:text-white text-sm transition-colors duration-200"
+                        sx={{
+                          color: 'grey.300',
+                          textDecoration: 'none',
+                          fontSize: '0.875rem',
+                          '&:hover': { color: 'white' },
+                          transition: 'color 0.2s ease',
+                        }}
                       >
                         {link.name}
-                      </Link>
-                    </li>
+                      </MuiLink>
+                    </Box>
                   ))}
-                </ul>
-              </div>
+                </Box>
+              </Grid>
             ))}
-          </div>
-        </div>
+          </Grid>
+        </Box>
 
         {/* Bottom Border */}
-        <div className="border-t border-gray-600 py-6">
-          <div className="flex flex-col sm:flex-row justify-between items-center">
-            <p className="text-gray-300 text-sm">
+        <Box
+          sx={{
+            borderTop: 1,
+            borderColor: 'grey.600',
+            py: 3,
+          }}
+        >
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: { xs: 'column', sm: 'row' },
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              gap: 2,
+            }}
+          >
+            <Typography variant="body2" sx={{ color: 'grey.300' }}>
               © {new Date().getFullYear()} OnTap MN. All rights reserved.
-            </p>
-            <div className="mt-4 sm:mt-0 text-center sm:text-right">
-              <p className="text-gray-300 text-sm">
+            </Typography>
+            <Box sx={{ textAlign: { xs: 'center', sm: 'right' } }}>
+              <Typography variant="body2" sx={{ color: 'grey.300' }}>
                 Made with ❤️ in Minnesota
-              </p>
-              <p className="text-gray-400 text-xs mt-1">
+              </Typography>
+              <Typography variant="caption" sx={{ color: 'grey.400' }}>
                 Designed and built by{' '}
-                <a 
-                  href="https://github.com/Austtiin" 
-                  target="_blank" 
+                <MuiLink
+                  href="https://github.com/Austtiin"
+                  target="_blank"
                   rel="noopener noreferrer"
-                  className="text-secondary hover:text-secondary-light transition-colors duration-200"
+                  sx={{
+                    color: 'secondary.main',
+                    textDecoration: 'none',
+                    '&:hover': { color: 'secondary.light' },
+                    transition: 'color 0.2s ease',
+                  }}
                 >
                   AS
-                </a>
-              </p>
-            </div>
-          </div>
-        </div>
+                </MuiLink>
+              </Typography>
+            </Box>
+          </Box>
+        </Box>
       </Container>
-    </footer>
+    </Box>
   )
 }

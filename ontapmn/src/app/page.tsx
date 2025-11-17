@@ -3,7 +3,8 @@ import {
   Footer, 
   HeroBanner, 
   ServiceCategories, 
-  FeaturedEvents 
+  FeaturedEvents,
+  WhyChooseUs
 } from '../components'
 
 export default function Home() {
@@ -13,6 +14,7 @@ export default function Home() {
       <main>
         <HeroBanner />
         <ServiceCategories />
+        <WhyChooseUs />
         <FeaturedEvents />
       </main>
       <Footer />

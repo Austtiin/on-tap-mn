@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Button } from '@/components/ui'
+import Button from '@mui/material/Button'
 import { 
   FormInput, 
   FormTextarea, 
@@ -208,7 +208,8 @@ export function SubmitEventForm() {
         </p>
         <Button 
           onClick={() => setSubmitSuccess(false)}
-          variant="primary"
+          variant="contained"
+          color="primary"
         >
           Submit Another Event
         </Button>
@@ -545,10 +546,11 @@ export function SubmitEventForm() {
       <div className="flex justify-end pt-6 border-t border-gray-200">
         <Button
           type="submit"
-          variant="primary"
-          size="lg"
+          variant="contained"
+          color="primary"
+          size="large"
           disabled={isSubmitting}
-          className="min-w-[200px]"
+          sx={{ minWidth: 200 }}
         >
           {isSubmitting ? 'Submitting...' : 'Submit Event'}
         </Button>

@@ -1,11 +1,14 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
+import { Poppins } from "next/font/google";
 import Script from "next/script";
 import "@/app/globals.css";
+import ThemeRegistry from "@/theme/ThemeRegistry";
 
-const inter = Inter({
+const poppins = Poppins({
+  weight: ['300', '400', '500', '600', '700', '800'],
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-poppins",
+  display: 'swap',
 });
 
 export const viewport: Viewport = {
@@ -58,7 +61,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={poppins.variable}>
       <head>
         <Script
           async
@@ -81,7 +84,9 @@ export default function RootLayout({
         </Script>
       </head>
       <body className="antialiased font-sans min-h-screen bg-white text-foreground">
-        {children}
+        <ThemeRegistry>
+          {children}
+        </ThemeRegistry>
       </body>
     </html>
   );

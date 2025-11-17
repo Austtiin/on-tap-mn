@@ -2,7 +2,20 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { Container } from './ui'
+import AppBar from '@mui/material/AppBar'
+import Toolbar from '@mui/material/Toolbar'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import IconButton from '@mui/material/IconButton'
+import Drawer from '@mui/material/Drawer'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import ListItemButton from '@mui/material/ListItemButton'
+import ListItemText from '@mui/material/ListItemText'
+import Container from '@mui/material/Container'
+import MenuIcon from '@mui/icons-material/Menu'
+import CloseIcon from '@mui/icons-material/Close'
+import Typography from '@mui/material/Typography'
 
 const navigation = [
   { name: 'Bar Bingo', href: '/bar-bingo' },
@@ -19,83 +32,115 @@ export function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
-    <nav className="bg-white shadow-lg sticky top-0 z-50">
+    <AppBar position="sticky" color="inherit" elevation={1}>
       {/* Advertising Banner Space */}
-      <div className="bg-secondary text-center py-2 text-sm text-accent">
+      <Box sx={{ bgcolor: 'secondary.main', textAlign: 'center', py: 1 }}>
         <Container>
-          <div className="flex justify-center space-x-4">
-            <span>🍺 Advertise with us!</span>
-            <Link href="/advertise" className="underline hover:text-accent-dark">
-              Learn More
+          <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, alignItems: 'center' }}>
+            <Typography variant="body2" component="span">
+              🍺 Advertise with us!
+            </Typography>
+            <Link href="/advertise" style={{ textDecoration: 'none' }}>
+              <Typography
+                variant="body2"
+                component="span"
+                sx={{
+                  textDecoration: 'underline',
+                  color: 'text.primary',
+                  '&:hover': { color: 'primary.dark' },
+                }}
+              >
+                Learn More
+              </Typography>
             </Link>
-          </div>
+          </Box>
         </Container>
-      </div>
-      
+      </Box>
+
       <Container>
-        <div className="flex justify-between items-center py-4">
+        <Toolbar disableGutters sx={{ justifyContent: 'space-between' }}>
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
-            <div className="bg-primary text-white px-3 py-2 rounded-lg font-bold text-lg">
-              OnTap
-            </div>
-            <span className="text-primary font-semibold text-lg hidden sm:block">MN</span>
+          <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 12 }}>
+            <Box
+              component="img"
+              src="/logos/ontapMNlogo.webp"
+              alt="OnTap MN Logo"
+              sx={{
+                width: { xs: 56, sm: 64 },
+                height: { xs: 56, sm: 64 },
+                objectFit: 'contain',
+              }}
+            />
+            <Typography
+              variant="h6"
+              component="span"
+              sx={{ color: 'primary.main', fontWeight: 700, fontSize: '1.5rem', display: { xs: 'none', sm: 'block' } }}
+            >
+              OnTap MN
+            </Typography>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-8">
+          <Box sx={{ display: { xs: 'none', lg: 'flex' }, gap: 3 }}>
             {navigation.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="text-accent hover:text-primary font-medium transition-colors duration-200"
-              >
-                {item.name}
+              <Link key={item.name} href={item.href} style={{ textDecoration: 'none' }}>
+                <Button
+                  sx={{
+                    color: 'text.primary',
+                    fontWeight: 500,
+                    '&:hover': { color: 'primary.main' },
+                  }}
+                >
+                  {item.name}
+                </Button>
               </Link>
             ))}
-          </div>
+          </Box>
 
           {/* Mobile menu button */}
-          <button
-            type="button"
-            className="lg:hidden p-2 text-accent hover:text-primary"
+          <IconButton
+            sx={{ display: { lg: 'none' } }}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle mobile menu"
           >
-            <svg
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-            >
-              {mobileMenuOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-              ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-              )}
-            </svg>
-          </button>
-        </div>
+            {mobileMenuOpen ? <CloseIcon /> : <MenuIcon />}
+          </IconButton>
+        </Toolbar>
 
-        {/* Mobile Navigation Menu */}
-        {mobileMenuOpen && (
-          <div className="lg:hidden pb-4">
-            <div className="space-y-2">
+        {/* Mobile Navigation Drawer */}
+        <Drawer
+          anchor="right"
+          open={mobileMenuOpen}
+          onClose={() => setMobileMenuOpen(false)}
+          sx={{ display: { lg: 'none' } }}
+        >
+          <Box sx={{ width: 250, pt: 2 }}>
+            <List>
               {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className="block px-4 py-2 text-accent hover:text-primary hover:bg-gray-50 rounded-lg transition-colors duration-200"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {item.name}
-                </Link>
+                <ListItem key={item.name} disablePadding>
+                  <Link
+                    href={item.href}
+                    style={{ textDecoration: 'none', width: '100%' }}
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <ListItemButton>
+                      <ListItemText
+                        primary={item.name}
+                        sx={{
+                          '& .MuiListItemText-primary': {
+                            color: 'text.primary',
+                            fontWeight: 500,
+                          },
+                        }}
+                      />
+                    </ListItemButton>
+                  </Link>
+                </ListItem>
               ))}
-            </div>
-          </div>
-        )}
+            </List>
+          </Box>
+        </Drawer>
       </Container>
-    </nav>
+    </AppBar>
   )
 }

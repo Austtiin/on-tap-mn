@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Navigation, Footer, Container, Section } from '../../components'
-import { Button } from '../../components/ui'
+import Button from '@mui/material/Button'
 
 export const metadata: Metadata = {
   title: 'Advertise with OnTap MN',
@@ -257,18 +257,18 @@ export default function AdvertisePage() {
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link href="/contact">
                   <Button 
-                    size="lg"
-                    variant="outline"
-                    className="border-white text-white hover:bg-white hover:text-primary"
+                    size="large"
+                    variant="outlined"
+                    sx={{ borderColor: 'white', color: 'white', '&:hover': { borderColor: 'white', bgcolor: 'white', color: 'primary.main' } }}
                   >
                     Get Started Today
                   </Button>
                 </Link>
                 <Link href="/submit-event">
                   <Button 
-                    size="lg"
-                    variant="outline"
-                    className="border-white text-white hover:bg-white hover:text-primary"
+                    size="large"
+                    variant="outlined"
+                    sx={{ borderColor: 'white', color: 'white', '&:hover': { borderColor: 'white', bgcolor: 'white', color: 'primary.main' } }}
                   >
                     List Your Events Free
                   </Button>

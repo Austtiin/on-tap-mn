@@ -6,6 +6,7 @@ export { Footer } from './Footer'
 export { HeroBanner } from './HeroBanner'
 export { ServiceCategories } from './ServiceCategories'
 export { FeaturedEvents } from './FeaturedEvents'
+export { WhyChooseUs } from './WhyChooseUs'
 
-// UI Components
-export * from './ui'
+// UI Wrapper Components (MUI-based)
+export { Container, Section } from './ui/MuiWrappers'

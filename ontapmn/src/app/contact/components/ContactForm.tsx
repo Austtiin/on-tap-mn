@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Button } from '../../../components/ui'
+import Button from '@mui/material/Button'
 import { FormInput, FormTextarea, FormSelect } from '../../submit-event/components/FormComponents'
 
 interface ContactFormData {
@@ -110,7 +110,8 @@ export function ContactForm() {
           </p>
           <Button 
             onClick={() => setSubmitSuccess(false)}
-            variant="primary"
+            variant="contained"
+            color="primary"
           >
             Send Another Message
           </Button>
@@ -197,10 +198,11 @@ export function ContactForm() {
         <div className="flex justify-end">
           <Button
             type="submit"
-            variant="primary"
-            size="lg"
+            variant="contained"
+            color="primary"
+            size="large"
             disabled={isSubmitting}
-            className="min-w-[150px]"
+            sx={{ minWidth: 150 }}
           >
             {isSubmitting ? 'Sending...' : 'Send Message'}
           </Button>
