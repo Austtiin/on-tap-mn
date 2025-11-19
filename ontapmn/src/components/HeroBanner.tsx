@@ -111,7 +111,7 @@ export function HeroBanner() {
 
       {/* Content */}
       <Container sx={{ position: 'relative', zIndex: 2 }}>
-        <Box sx={{ py: { xs: 8, md: 10, lg: 12 } }}>
+        <Box sx={{ py: { xs: 2, md: 4, lg: 6 } }}>
           <Box sx={{ textAlign: 'center' }}>
             {/* Logo (smaller to prioritize copy) */}
             <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
@@ -119,7 +119,7 @@ export function HeroBanner() {
                 component="img"
                 src="/logos/ontapMNlogo.webp"
                 alt="OnTap MN Logo"
-                sx={{ width: { xs: 120, md: 160, lg: 200 }, height: { xs: 120, md: 160, lg: 180 }, objectFit: 'contain' }}
+                sx={{ width: { xs: 220, md: 350, lg: 400 }, height: { xs: 220, md: 350, lg: 400 }, objectFit: 'contain' }}
               />
             </Box>
 

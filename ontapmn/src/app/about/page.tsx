@@ -115,7 +115,7 @@ export default function AboutPage() {
                 <div className="relative bg-gradient-to-br from-amber-50 to-white rounded-xl p-6 border border-amber-100 shadow-sm hover:shadow-lg transition-shadow">
                   <div className="absolute -top-3 -left-3 bg-gradient-to-br from-amber-400 to-amber-500 text-white w-10 h-10 rounded-lg flex items-center justify-center shadow-md">🍺</div>
                   <h3 className="text-lg font-semibold text-black mb-2">Local • Not Corporate</h3>
-                  <p className="text-gray-700 text-sm leading-relaxed">We focus on the neighborhood bars, VFWs, lodges, and taverns that make Minnesota special—not massive chains.</p>
+                  <p className="text-gray-700 text-sm leading-relaxed">We focus on the neighborhood bars, VFWs, lodges, and taverns that make Minnesota special.</p>
                 </div>
                 <div className="relative bg-gradient-to-br from-white to-amber-50 rounded-xl p-6 border border-amber-100 shadow-sm hover:shadow-lg transition-shadow">
                   <div className="absolute -top-3 -left-3 bg-gradient-to-br from-amber-400 to-amber-500 text-white w-10 h-10 rounded-lg flex items-center justify-center shadow-md">✅</div>
@@ -162,7 +162,7 @@ export default function AboutPage() {
                     <div className="mb-4 rounded-lg border border-amber-100 bg-amber-50/40 p-4 text-amber-900 text-sm leading-relaxed">
                       <div className="flex items-start">
                         <span className="mr-2 text-amber-600 text-lg">“</span>
-                        <p className="flex-1">OnTap MN is my love letter to Minnesota’s bar culture—simple, helpful, and built for locals. If it helps just one more person find a great night out, it’s worth it.</p>
+                        <p className="flex-1">OnTap MN is dedicated to Minnesota’s bar culture—simple, helpful, and built for locals. If it helps just one more person find a great night out, it’s worth it.</p>
                       </div>
                     </div>
                     <div className="space-y-4 text-gray-700 leading-relaxed text-[15px]">

@@ -44,8 +44,9 @@ export function Footer() {
           left: '-10%',
           width: '50%',
           height: '200%',
-          background: 'radial-gradient(circle, rgba(251, 191, 36, 0.05) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(251, 191, 36, 0.02) 0%, transparent 70%)',
           pointerEvents: 'none',
+          display: { xs: 'none', md: 'block' },
         },
         '&::after': {
           content: '""',
@@ -60,15 +61,16 @@ export function Footer() {
           `,
           backgroundSize: '30px 30px',
           pointerEvents: 'none',
+          display: { xs: 'none', md: 'block' },
         },
       }}
     >
       <Container>
         <Box sx={{ py: 6 }}>
-          <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)' }, gap: 4 }}>
+          <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)' }, gap: 4, textAlign: { xs: 'center', md: 'left' } }}>
             {/* Brand Section */}
             <Box>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 2 }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 2, justifyContent: { xs: 'center', md: 'flex-start' } }}>
                 <Box
                   component="img"
                   src="/logos/ontapMNlogo.webp"
@@ -95,7 +97,7 @@ export function Footer() {
               </Typography>
 
               {/* Social Media Icons */}
-              <Box sx={{ display: 'flex', gap: 2 }}>
+              <Box sx={{ display: 'flex', gap: 2, justifyContent: { xs: 'center', md: 'flex-start' } }}>
                 <IconButton
                   component="a"
                   href="#"

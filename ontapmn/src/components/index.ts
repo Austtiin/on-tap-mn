@@ -2,6 +2,7 @@
 export { Navigation } from './Navigation'
 export { Footer } from './Footer'
 export { CookieConsent } from './CookieConsent'
+export { default as AdSense } from './AdSense'
 
 // Page Sections
 export { HeroBanner } from './HeroBanner'

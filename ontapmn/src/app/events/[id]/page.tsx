@@ -1,10 +1,11 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { Navigation, Footer, Container, Section } from '../../../components'
+import { Navigation, Footer, Container, Section, AdSense } from '../../../components'
 import Button from '@mui/material/Button'
 import Chip from '@mui/material/Chip'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
+import Typography from '@mui/material/Typography'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import LocationOnIcon from '@mui/icons-material/LocationOn'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
@@ -17,7 +18,15 @@ import ShareIcon from '@mui/icons-material/Share'
 
 // Generate static params for static export
 export function generateStaticParams() {
-  return [{ id: '1' }] // Placeholder - will be replaced with actual event IDs
+  // Return all event IDs from SAMPLE_EVENTS
+  // In production, this should fetch all event IDs from your API/database
+  return [
+    { id: '1' },
+    { id: '2' },
+    { id: '3' },
+    { id: '4' },
+    { id: '5' },
+  ]
 }
 
 // This will be replaced with dynamic data fetching
@@ -65,6 +74,62 @@ const getEventData = (id: string) => {
   }
 }
 
+// TODO: Replace with actual related events API call
+const getRelatedEvents = (currentEvent: ReturnType<typeof getEventData>) => {
+  // Sample events pool
+  const allEvents = [
+    {
+      id: 2,
+      title: "Friday Night Bar Bingo",
+      venue: "River Place",
+      location: "Bloomington, MN",
+      date: "2025-01-17",
+      time: "8:00 PM",
+      category: "Bar Bingo"
+    },
+    {
+      id: 3,
+      title: "Weekly Trivia Night",
+      venue: "River Place",
+      location: "Bloomington, MN",
+      date: "2025-01-18",
+      time: "7:30 PM",
+      category: "Trivia"
+    },
+    {
+      id: 4,
+      title: "Tuesday Bar Bingo Championship",
+      venue: "The Local Tavern",
+      location: "Minneapolis, MN",
+      date: "2025-01-14",
+      time: "6:30 PM",
+      category: "Bar Bingo"
+    },
+    {
+      id: 5,
+      title: "Karaoke Night Extravaganza",
+      venue: "The Stage Bar",
+      location: "St. Paul, MN",
+      date: "2025-01-20",
+      time: "9:00 PM",
+      category: "Karaoke"
+    },
+  ]
+
+  // Filter: same venue or same category (excluding current event)
+  const related = allEvents.filter(e => 
+    e.id.toString() !== currentEvent.id && 
+    (e.venue === currentEvent.venue || e.category === currentEvent.category)
+  )
+
+  // Prioritize: same venue first, then same category
+  const sameVenue = related.filter(e => e.venue === currentEvent.venue)
+  const sameCategory = related.filter(e => e.category === currentEvent.category && e.venue !== currentEvent.venue)
+
+  // Return up to 3 events, prioritizing same venue
+  return [...sameVenue, ...sameCategory].slice(0, 3)
+}
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   // TODO: Replace with actual data fetching
   const event = getEventData(params.id)
@@ -79,6 +144,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default function EventDetailsPage({ params }: PageProps) {
   // TODO: Replace with actual data fetching
   const event = getEventData(params.id)
+  const relatedEvents = getRelatedEvents(event)
 
   const getCategoryColor = (category: string) => {
     const colors: Record<string, string> = {
@@ -201,15 +267,9 @@ export default function EventDetailsPage({ params }: PageProps) {
                   </Card>
 
                   {/* AdSense Ad - Horizontal Banner */}
-                  <Card className="shadow-md bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-dashed border-gray-300">
-                    <CardContent className="p-6">
-                      <div className="text-center">
-                        <div className="text-xs text-gray-500 font-semibold mb-3 uppercase tracking-wider">Advertisement</div>
-                        <div className="bg-white rounded-lg flex flex-col items-center justify-center border-2 border-gray-200" style={{ minHeight: '90px' }}>
-                          <span className="text-gray-400 font-medium mb-1">AdSense Banner Ad</span>
-                          <span className="text-gray-400 text-xs">728x90 or Responsive</span>
-                        </div>
-                      </div>
+                  <Card className="shadow-md">
+                    <CardContent className="p-4">
+                      <AdSense adSlot="7178530322" adFormat="auto" fullWidthResponsive={true} />
                     </CardContent>
                   </Card>
 
@@ -270,23 +330,17 @@ export default function EventDetailsPage({ params }: PageProps) {
                   </Card>
 
                   {/* AdSense Ad - In-Feed Ad */}
-                  <Card className="shadow-md bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-dashed border-gray-300">
-                    <CardContent className="p-6">
-                      <div className="text-center">
-                        <div className="text-xs text-gray-500 font-semibold mb-3 uppercase tracking-wider">Advertisement</div>
-                        <div className="bg-white rounded-lg flex flex-col items-center justify-center border-2 border-gray-200" style={{ minHeight: '250px' }}>
-                          <span className="text-gray-400 font-medium mb-1">AdSense In-Feed Ad</span>
-                          <span className="text-gray-400 text-xs">300x250 or Responsive</span>
-                        </div>
-                      </div>
+                  <Card className="shadow-md">
+                    <CardContent className="p-4">
+                      <AdSense adSlot="7178530322" adFormat="auto" fullWidthResponsive={true} />
                     </CardContent>
                   </Card>
                 </div>
 
                 {/* Sidebar */}
-                <div className="space-y-6">
+                <div className="space-y-6 lg:self-start">
                   {/* Venue Information */}
-                  <Card className="shadow-lg sticky top-6">
+                  <Card className="shadow-lg lg:sticky lg:top-24">
                     <CardContent className="p-6">
                       <h3 className="text-xl font-bold text-black mb-6">Venue Information</h3>
                       
@@ -350,28 +404,16 @@ export default function EventDetailsPage({ params }: PageProps) {
                   </Card>
 
                   {/* AdSense Ad - Sidebar Rectangle */}
-                  <Card className="shadow-lg bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-dashed border-gray-300">
-                    <CardContent className="p-6">
-                      <div className="text-center">
-                        <div className="text-xs text-gray-500 font-semibold mb-3 uppercase tracking-wider">Advertisement</div>
-                        <div className="bg-white rounded-lg flex flex-col items-center justify-center border-2 border-gray-200" style={{ minHeight: '250px' }}>
-                          <span className="text-gray-400 font-medium mb-1">AdSense Sidebar Ad</span>
-                          <span className="text-gray-400 text-xs">300x250 Rectangle</span>
-                        </div>
-                      </div>
+                  <Card className="shadow-lg">
+                    <CardContent className="p-4">
+                      <AdSense adSlot="7178530322" adFormat="auto" fullWidthResponsive={true} />
                     </CardContent>
                   </Card>
 
                   {/* AdSense Ad - Sidebar Vertical */}
-                  <Card className="shadow-lg bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-dashed border-gray-300">
-                    <CardContent className="p-6">
-                      <div className="text-center">
-                        <div className="text-xs text-gray-500 font-semibold mb-3 uppercase tracking-wider">Advertisement</div>
-                        <div className="bg-white rounded-lg flex flex-col items-center justify-center border-2 border-gray-200" style={{ minHeight: '600px' }}>
-                          <span className="text-gray-400 font-medium mb-1">AdSense Skyscraper</span>
-                          <span className="text-gray-400 text-xs">160x600 or 300x600</span>
-                        </div>
-                      </div>
+                  <Card className="shadow-lg">
+                    <CardContent className="p-4">
+                      <AdSense adSlot="7178530322" adFormat="auto" fullWidthResponsive={true} />
                     </CardContent>
                   </Card>
                 </div>
@@ -384,15 +426,9 @@ export default function EventDetailsPage({ params }: PageProps) {
         <Section padding="md">
           <Container>
             <div className="max-w-6xl mx-auto">
-              <Card className="shadow-md bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-dashed border-gray-300">
-                <CardContent className="p-8">
-                  <div className="text-center">
-                    <div className="text-xs text-gray-500 font-semibold mb-4 uppercase tracking-wider">Advertisement</div>
-                    <div className="bg-white rounded-lg flex flex-col items-center justify-center border-2 border-gray-200" style={{ minHeight: '90px' }}>
-                      <span className="text-gray-400 font-medium mb-1">AdSense Horizontal Banner</span>
-                      <span className="text-gray-400 text-xs">970x90 or 728x90 Leaderboard</span>
-                    </div>
-                  </div>
+              <Card className="shadow-md">
+                <CardContent className="p-4">
+                  <AdSense adSlot="7178530322" adFormat="auto" fullWidthResponsive={true} />
                 </CardContent>
               </Card>
             </div>
@@ -404,42 +440,63 @@ export default function EventDetailsPage({ params }: PageProps) {
           <Container>
             <div className="max-w-6xl mx-auto">
               <h2 className="text-3xl font-bold text-black mb-8">More Events You Might Like</h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {[1, 2, 3].map((i) => (
-                  <Card key={i} className="shadow-lg hover:shadow-xl transition-shadow duration-300">
-                    <CardContent className="p-6">
-                      <Chip 
-                        label="Bar Bingo"
-                        size="small"
-                        className="mb-3"
-                        sx={{ bgcolor: 'primary.main', color: 'white' }}
-                      />
-                      <h3 className="text-lg font-bold text-black mb-2">
-                        Related Event Title {i}
-                      </h3>
-                      <div className="space-y-2 text-sm text-gray-600 mb-4">
-                        <div className="flex items-center gap-2">
-                          <LocationOnIcon className="w-4 h-4" />
-                          <span>Venue Name</span>
+              {relatedEvents.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {relatedEvents.map((relatedEvent) => (
+                    <Card key={relatedEvent.id} className="shadow-lg hover:shadow-xl transition-shadow duration-300">
+                      <CardContent className="p-6">
+                        <Chip 
+                          label={relatedEvent.category}
+                          size="small"
+                          className="mb-3"
+                          sx={{ bgcolor: 'primary.main', color: 'white' }}
+                        />
+                        <h3 className="text-lg font-bold text-black mb-2">
+                          {relatedEvent.title}
+                        </h3>
+                        <div className="space-y-2 text-sm text-gray-600 mb-4">
+                          <div className="flex items-center gap-2">
+                            <LocationOnIcon className="w-4 h-4" />
+                            <span>{relatedEvent.venue}</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <CalendarTodayIcon className="w-4 h-4" />
+                            <span>{new Date(relatedEvent.date).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <AccessTimeIcon className="w-4 h-4" />
+                            <span>{relatedEvent.time}</span>
+                          </div>
                         </div>
-                        <div className="flex items-center gap-2">
-                          <CalendarTodayIcon className="w-4 h-4" />
-                          <span>Date TBD</span>
-                        </div>
-                      </div>
-                      <Button 
-                        variant="outlined" 
-                        size="small" 
-                        fullWidth
-                        component={Link}
-                        href="/events"
-                      >
-                        View Details
-                      </Button>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
+                        <Button 
+                          variant="outlined" 
+                          size="small" 
+                          fullWidth
+                          component={Link}
+                          href={`/events/${relatedEvent.id}`}
+                        >
+                          View Details
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              ) : (
+                <Card className="shadow-md">
+                  <CardContent className="p-8 text-center">
+                    <Typography variant="body1" sx={{ color: 'text.secondary', mb: 3 }}>
+                      No similar events found at the moment.
+                    </Typography>
+                    <Button 
+                      variant="contained" 
+                      component={Link} 
+                      href="/events"
+                    >
+                      Browse All Events
+                    </Button>
+                  </CardContent>
+                </Card>
+              )}
             </div>
           </Container>
         </Section>

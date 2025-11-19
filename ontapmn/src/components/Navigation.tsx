@@ -107,7 +107,7 @@ export function Navigation() {
       <Container>
         <Toolbar
           disableGutters
-          sx={{ justifyContent: 'space-between', py: isScrolled ? 0.5 : 1.5, transition: 'padding 200ms ease' }}
+          sx={{ justifyContent: 'space-between', py: isScrolled ? 0.5 : 1, transition: 'padding 200ms ease' }}
         >
           {/* Logo */}
           <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 12 }}>
@@ -116,8 +116,8 @@ export function Navigation() {
               src="/logos/ontapMNlogo.webp"
               alt="OnTap MN Logo"
               sx={{
-                width: isScrolled ? { xs: 44, sm: 52 } : { xs: 56, sm: 64 },
-                height: isScrolled ? { xs: 44, sm: 52 } : { xs: 56, sm: 64 },
+                width: isScrolled ? { xs: 64, sm: 52 } : { xs: 80, sm: 64 },
+                height: isScrolled ? { xs: 64, sm: 52 } : { xs: 80, sm: 64 },
                 objectFit: 'contain',
                 transition: 'all 200ms ease',
               }}

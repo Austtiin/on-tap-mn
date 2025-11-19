@@ -13,6 +13,7 @@ import CardContent from '@mui/material/CardContent'
 import Accordion from '@mui/material/Accordion'
 import AccordionSummary from '@mui/material/AccordionSummary'
 import AccordionDetails from '@mui/material/AccordionDetails'
+import Pagination from '@mui/material/Pagination'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import CasinoIcon from '@mui/icons-material/Casino'
 import LocalDiningIcon from '@mui/icons-material/LocalDining'
@@ -21,7 +22,7 @@ import EmojiEventsIcon from '@mui/icons-material/EmojiEvents'
 import MusicNoteIcon from '@mui/icons-material/MusicNote'
 import LocationOnIcon from '@mui/icons-material/LocationOn'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
-import { Navigation, Footer } from '../../components'
+import { Navigation, Footer, AdSense } from '../../components'
 
 type Category = 'Bar Bingo' | 'Meat Raffles' | 'Karaoke' | 'Trivia' | 'Live Music'
 
@@ -61,6 +62,7 @@ type EventItem = {
   time: string // e.g. '6:00 PM'
   price: string
   category: Category
+  image?: string // Optional event image
 }
 
 const SAMPLE_EVENTS: EventItem[] = [
@@ -135,6 +137,8 @@ export default function EventsPage() {
   const [days, setDays] = useState<DayKey[]>([])
   const [times, setTimes] = useState<TimeKey[]>([])
   const [filtersOpen, setFiltersOpen] = useState(false)
+  const [currentPage, setCurrentPage] = useState(1)
+  const itemsPerPage = 20
 
   // Load filters from URL on mount
   useEffect(() => {
@@ -199,6 +203,17 @@ export default function EventsPage() {
       }
       return true
     })
+  }, [cats, days, times])
+
+  const totalPages = Math.ceil(filtered.length / itemsPerPage)
+  const paginatedEvents = useMemo(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage
+    return filtered.slice(startIndex, startIndex + itemsPerPage)
+  }, [filtered, currentPage])
+
+  // Reset to page 1 when filters change
+  useEffect(() => {
+    setCurrentPage(1)
   }, [cats, days, times])
 
   const clearAll = () => {
@@ -332,7 +347,7 @@ export default function EventsPage() {
                   <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 0.5 }}>
                     Filters
                   </Typography>
-                  <Accordion disableGutters defaultExpanded sx={{ bgcolor: 'transparent', boxShadow: 'none' }}>
+                  <Accordion disableGutters sx={{ bgcolor: 'transparent', boxShadow: 'none' }}>
                     <AccordionSummary expandIcon={<ExpandMoreIcon fontSize="small" />}> 
                       <Typography variant="caption" sx={{ fontWeight: 600 }}>Categories</Typography>
                       <Box sx={{ ml: 'auto' }}>
@@ -359,7 +374,7 @@ export default function EventsPage() {
                       </Box>
                     </AccordionDetails>
                   </Accordion>
-                  <Accordion disableGutters defaultExpanded sx={{ bgcolor: 'transparent', boxShadow: 'none' }}>
+                  <Accordion disableGutters sx={{ bgcolor: 'transparent', boxShadow: 'none' }}>
                     <AccordionSummary expandIcon={<ExpandMoreIcon fontSize="small" />}> 
                       <Typography variant="caption" sx={{ fontWeight: 600 }}>Days</Typography>
                       <Box sx={{ ml: 'auto' }}>
@@ -385,7 +400,7 @@ export default function EventsPage() {
                       </Box>
                     </AccordionDetails>
                   </Accordion>
-                  <Accordion disableGutters defaultExpanded sx={{ bgcolor: 'transparent', boxShadow: 'none' }}>
+                  <Accordion disableGutters sx={{ bgcolor: 'transparent', boxShadow: 'none' }}>
                     <AccordionSummary expandIcon={<ExpandMoreIcon fontSize="small" />}> 
                       <Typography variant="caption" sx={{ fontWeight: 600 }}>Time</Typography>
                       <Box sx={{ ml: 'auto' }}>
@@ -442,28 +457,40 @@ export default function EventsPage() {
                 </Box>
 
                 {/* AdSense - Top Banner Before Events */}
-                <Card sx={{ mb: 3, boxShadow: 2, borderRadius: 3, border: '2px dashed', borderColor: 'grey.300' }}>
-                  <CardContent sx={{ py: 3 }}>
-                    <Box sx={{ textAlign: 'center' }}>
-                      <Typography variant="caption" sx={{ color: 'text.secondary', fontWeight: 600, textTransform: 'uppercase', letterSpacing: 1 }}>
-                        Advertisement
-                      </Typography>
-                      <Box sx={{ bgcolor: 'white', borderRadius: 2, mt: 2, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', border: '2px solid', borderColor: 'grey.200', minHeight: '90px' }}>
-                        <Typography sx={{ color: 'text.secondary', fontWeight: 500 }}>AdSense Leaderboard</Typography>
-                        <Typography variant="caption" sx={{ color: 'text.secondary' }}>728x90 or Responsive</Typography>
-                      </Box>
-                    </Box>
+                <Card sx={{ mb: 3, boxShadow: 2, borderRadius: 3 }}>
+                  <CardContent sx={{ py: 2 }}>
+                    <AdSense adSlot="7178530322" adFormat="auto" fullWidthResponsive={true} />
                   </CardContent>
                 </Card>
 
-                <Box
-                  sx={{
-                    display: 'grid',
-                    gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', lg: 'repeat(3, 1fr)' },
-                    gap: 3,
-                  }}
-                >
-                  {filtered.map((event) => (
+                {filtered.length === 0 ? (
+                  <Box sx={{ textAlign: 'center', py: 8 }}>
+                    <Typography variant="h5" sx={{ fontWeight: 700, mb: 2, color: 'text.primary' }}>
+                      No events at the moment
+                    </Typography>
+                    <Typography variant="body1" sx={{ color: 'text.secondary', mb: 4 }}>
+                      Be the first to share an event with the community!
+                    </Typography>
+                    <Button 
+                      variant="contained" 
+                      size="large"
+                      component={Link} 
+                      href="/submit-event"
+                      sx={{ fontWeight: 600 }}
+                    >
+                      Post Your Event for Free
+                    </Button>
+                  </Box>
+                ) : (
+                  <>
+                    <Box
+                      sx={{
+                        display: 'grid',
+                        gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', lg: 'repeat(3, 1fr)' },
+                        gap: 3,
+                      }}
+                    >
+                      {paginatedEvents.map((event) => (
                           <Card
                             key={event.id}
                             sx={{
@@ -496,6 +523,18 @@ export default function EventsPage() {
                               borderColor: 'grey.200'
                             }}
                           >
+                            {event.image && (
+                              <Box
+                                component="img"
+                                src={event.image}
+                                alt={event.title}
+                                sx={{
+                                  width: '100%',
+                                  height: 200,
+                                  objectFit: 'cover',
+                                }}
+                              />
+                            )}
                             <Box
                               sx={{
                                 height: 6,
@@ -539,40 +578,30 @@ export default function EventsPage() {
                             </CardContent>
                           </Card>
                       ))}
-                  
-                  {/* AdSense - Mid-Page Display Ad - Every 6 events */}
-                  {filtered.map((_, index) => (
-                    (index + 1) % 6 === 0 && index < filtered.length - 1 && (
-                      <Card key={`ad-${index}`} sx={{ gridColumn: '1 / -1', boxShadow: 2, borderRadius: 3, border: '2px dashed', borderColor: 'grey.300' }}>
-                        <CardContent sx={{ py: 3 }}>
-                          <Box sx={{ textAlign: 'center' }}>
-                            <Typography variant="caption" sx={{ color: 'text.secondary', fontWeight: 600, textTransform: 'uppercase', letterSpacing: 1 }}>
-                              Advertisement
-                            </Typography>
-                            <Box sx={{ bgcolor: 'white', borderRadius: 2, mt: 2, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', border: '2px solid', borderColor: 'grey.200', minHeight: '250px' }}>
-                              <Typography sx={{ color: 'text.secondary', fontWeight: 500 }}>AdSense Display Ad</Typography>
-                              <Typography variant="caption" sx={{ color: 'text.secondary' }}>300x250 or Responsive</Typography>
-                            </Box>
-                          </Box>
-                        </CardContent>
-                      </Card>
-                    )
-                  ))}
-                </Box>
+                    </Box>
+
+                    {/* Pagination - Show if more than 20 events */}
+                    {filtered.length > itemsPerPage && (
+                      <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+                        <Pagination 
+                          count={totalPages} 
+                          page={currentPage} 
+                          onChange={(_, page) => setCurrentPage(page)}
+                          color="primary"
+                          size="large"
+                          showFirstButton
+                          showLastButton
+                        />
+                      </Box>
+                    )}
+                  </>
+                )}
 
                 {/* AdSense - After Events List */}
                 {filtered.length > 0 && (
-                  <Card sx={{ mt: 3, boxShadow: 2, borderRadius: 3, border: '2px dashed', borderColor: 'grey.300' }}>
-                    <CardContent sx={{ py: 3 }}>
-                      <Box sx={{ textAlign: 'center' }}>
-                        <Typography variant="caption" sx={{ color: 'text.secondary', fontWeight: 600, textTransform: 'uppercase', letterSpacing: 1 }}>
-                          Advertisement
-                        </Typography>
-                        <Box sx={{ bgcolor: 'white', borderRadius: 2, mt: 2, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', border: '2px solid', borderColor: 'grey.200', minHeight: '90px' }}>
-                          <Typography sx={{ color: 'text.secondary', fontWeight: 500 }}>AdSense Banner</Typography>
-                          <Typography variant="caption" sx={{ color: 'text.secondary' }}>970x90 or Responsive</Typography>
-                        </Box>
-                      </Box>
+                  <Card sx={{ mt: 3, boxShadow: 2, borderRadius: 3 }}>
+                    <CardContent sx={{ py: 2 }}>
+                      <AdSense adSlot="7178530322" adFormat="auto" fullWidthResponsive={true} />
                     </CardContent>
                   </Card>
                 )}
@@ -609,7 +638,7 @@ export default function EventsPage() {
           </Box>
           <Box sx={{ p: 2, pt: 0 }}>
             {/* Reuse the same controls */}
-            <Accordion disableGutters defaultExpanded sx={{ bgcolor: 'transparent', boxShadow: 'none' }}>
+            <Accordion disableGutters sx={{ bgcolor: 'transparent', boxShadow: 'none' }}>
               <AccordionSummary expandIcon={<ExpandMoreIcon fontSize="small" />}> 
                 <Typography variant="caption" sx={{ fontWeight: 600 }}>Categories</Typography>
                 <Box sx={{ ml: 'auto' }}>
@@ -637,7 +666,7 @@ export default function EventsPage() {
               </AccordionDetails>
             </Accordion>
 
-            <Accordion disableGutters defaultExpanded sx={{ bgcolor: 'transparent', boxShadow: 'none' }}>
+            <Accordion disableGutters sx={{ bgcolor: 'transparent', boxShadow: 'none' }}>
               <AccordionSummary expandIcon={<ExpandMoreIcon fontSize="small" />}> 
                 <Typography variant="caption" sx={{ fontWeight: 600 }}>Days</Typography>
                 <Box sx={{ ml: 'auto' }}>
@@ -664,7 +693,7 @@ export default function EventsPage() {
               </AccordionDetails>
             </Accordion>
 
-            <Accordion disableGutters defaultExpanded sx={{ bgcolor: 'transparent', boxShadow: 'none' }}>
+            <Accordion disableGutters sx={{ bgcolor: 'transparent', boxShadow: 'none' }}>
               <AccordionSummary expandIcon={<ExpandMoreIcon fontSize="small" />}> 
                 <Typography variant="caption" sx={{ fontWeight: 600 }}>Time</Typography>
                 <Box sx={{ ml: 'auto' }}>
