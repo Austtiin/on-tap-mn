@@ -27,21 +27,26 @@ export function Container({
 interface SectionProps {
   children: ReactNode
   className?: string
-  background?: 'default' | 'gray' | 'primary' | 'secondary'
+  background?: 'default' | 'gray' | 'primary' | 'secondary' | 'dark' | 'cream' | 'paper'
   padding?: 'sm' | 'md' | 'lg' | 'xl'
+  edges?: 'none' | 'top' | 'bottom' | 'both'
 }
 
 export function Section({ 
   children, 
   className = '',
   background = 'default',
-  padding = 'md'
+  padding = 'md',
+  edges = 'none'
 }: SectionProps) {
   const backgroundMap = {
     default: '#ffffff',
     gray: '#f9fafb',
-    primary: 'linear-gradient(to bottom right, #8b1538, #6b1028)',
-    secondary: '#fbbf24'
+    primary: 'linear-gradient(135deg, #f59e0b 0%, #d97706 50%, #b45309 100%)',
+    secondary: '#fcd34d',
+    dark: 'linear-gradient(180deg, #0b0f16 0%, #111827 100%)',
+    cream: 'linear-gradient(180deg, #fffbeb 0%, #ffffff 100%)',
+    paper: 'linear-gradient(180deg, #fff7ed 0%, #ffffff 100%)'
   }
   
   const paddingMap = {
@@ -51,14 +56,38 @@ export function Section({
     xl: { xs: 10, md: 12, lg: 16 }
   }
   
+  const topFade = edges === 'top' || edges === 'both'
+  const bottomFade = edges === 'bottom' || edges === 'both'
+
   return (
     <Box
       component="section"
       className={className}
       sx={{
+        position: 'relative',
         background: backgroundMap[background],
         py: paddingMap[padding],
-        color: background === 'primary' ? 'white' : 'inherit'
+        color: background === 'primary' || background === 'dark' ? 'white' : 'inherit',
+        '&::before': topFade ? {
+          content: '""',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          height: 24,
+          background: 'linear-gradient(to bottom, rgba(0,0,0,0.06), rgba(0,0,0,0))',
+          pointerEvents: 'none'
+        } : undefined,
+        '&::after': bottomFade ? {
+          content: '""',
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: 24,
+          background: 'linear-gradient(to top, rgba(0,0,0,0.06), rgba(0,0,0,0))',
+          pointerEvents: 'none'
+        } : undefined,
       }}
     >
       {children}

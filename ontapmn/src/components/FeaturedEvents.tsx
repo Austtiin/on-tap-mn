@@ -2,7 +2,6 @@ import Link from 'next/link'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
-import Grid from '@mui/material/Grid'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Button from '@mui/material/Button'
@@ -54,16 +53,75 @@ const featuredEvents = [
 
 export function FeaturedEvents() {
   return (
-    <Box component="section" sx={{ py: { xs: 8, lg: 10 } }}>
-      <Container>
+    <Box 
+      component="section" 
+      sx={{ 
+        py: { xs: 8, lg: 10 },
+        position: 'relative',
+        background: 'linear-gradient(180deg, #fef3e0 0%, #fffbeb 50%, #ffffff 100%)',
+        '&::before': {
+          content: '""',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundImage: `
+            radial-gradient(circle at 10% 20%, rgba(251, 191, 36, 0.12) 0%, transparent 50%),
+            radial-gradient(circle at 90% 80%, rgba(251, 191, 36, 0.08) 0%, transparent 50%)
+          `,
+          pointerEvents: 'none',
+        },
+      }}
+    >
+      {/* Top fade to blend from previous section */}
+      <Box sx={{ position: 'absolute', top: 0, left: 0, right: 0, height: 24, zIndex: 0, background: 'linear-gradient(to bottom, rgba(0,0,0,0.06), rgba(0,0,0,0))' }} />
+      {/* Decorative Squares */}
+      <Box
+        sx={{
+          position: 'absolute',
+          top: '5%',
+          left: '5%',
+          width: '80px',
+          height: '80px',
+          border: '3px solid rgba(139, 21, 56, 0.08)',
+          transform: 'rotate(45deg)',
+          pointerEvents: 'none',
+          animation: 'rotate-slow 20s linear infinite',
+          '@keyframes rotate-slow': {
+            '0%': { transform: 'rotate(45deg)' },
+            '100%': { transform: 'rotate(405deg)' },
+          },
+        }}
+      />
+      <Box
+        sx={{
+          position: 'absolute',
+          bottom: '10%',
+          right: '15%',
+          width: '60px',
+          height: '60px',
+          border: '3px solid rgba(251, 191, 36, 0.15)',
+          transform: 'rotate(25deg)',
+          pointerEvents: 'none',
+          animation: 'rotate-reverse 15s linear infinite',
+          '@keyframes rotate-reverse': {
+            '0%': { transform: 'rotate(25deg)' },
+            '100%': { transform: 'rotate(-335deg)' },
+          },
+        }}
+      />
+
+      <Container maxWidth="lg">
         <Box sx={{ textAlign: 'center', mb: 6 }}>
           <Typography
             variant="h2"
             sx={{
-              fontSize: { xs: '1.875rem', lg: '2rem' },
+              fontSize: { xs: '1.75rem', lg: '1.875rem' },
               fontWeight: 'bold',
-              color: 'text.primary',
+              color: '#7c2d12',
               mb: 2,
+              textShadow: '0 2px 4px rgba(0,0,0,0.1)',
             }}
           >
             Featured Special Events
@@ -71,8 +129,8 @@ export function FeaturedEvents() {
           <Typography
             variant="body1"
             sx={{
-              fontSize: '1.0625rem',
-              color: 'text.secondary',
+              fontSize: '1rem',
+              color: '#78350f',
               maxWidth: '672px',
               mx: 'auto',
             }}
@@ -81,21 +139,47 @@ export function FeaturedEvents() {
           </Typography>
         </Box>
 
-        <Grid container spacing={4}>
+        <Box
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' },
+            gap: 4,
+            justifyItems: 'center',
+          }}
+        >
           {featuredEvents.map((event) => (
-            <Grid item xs={12} lg={4} key={event.id}>
               <Card
+                key={event.id}
                 sx={{
                   height: '100%',
+                  width: '100%',
+                  maxWidth: 380,
                   display: 'flex',
                   flexDirection: 'column',
                   border: 2,
                   borderColor: 'secondary.main',
                   overflow: 'hidden',
-                  transition: 'all 0.2s ease',
+                  position: 'relative',
+                  transition: 'all 0.3s ease',
+                  '&::before': {
+                    content: '""',
+                    position: 'absolute',
+                    top: 0,
+                    left: '-100%',
+                    width: '100%',
+                    height: '100%',
+                    background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)',
+                    transition: 'left 0.5s ease',
+                    pointerEvents: 'none',
+                    zIndex: 1,
+                  },
                   '&:hover': {
-                    transform: 'translateY(-4px)',
-                    boxShadow: 4,
+                    transform: 'translateY(-8px)',
+                    boxShadow: 8,
+                    borderColor: 'primary.main',
+                    '&::before': {
+                      left: '100%',
+                    },
                   },
                 }}
               >
@@ -140,8 +224,8 @@ export function FeaturedEvents() {
                   </Box>
                 </Box>
 
-                <CardContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', p: 2 }}>
-                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', mb: 1 }}>
+                <CardContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', p: 3 }}>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', mb: 1.5 }}>
                     <Typography
                       variant="caption"
                       sx={{
@@ -226,11 +310,10 @@ export function FeaturedEvents() {
                   >
                     View Details
                   </Button>
-                </CardContent>
-              </Card>
-            </Grid>
+              </CardContent>
+            </Card>
           ))}
-        </Grid>
+        </Box>
 
         {/* View All Events Button */}
         <Box sx={{ textAlign: 'center', mt: 5 }}>

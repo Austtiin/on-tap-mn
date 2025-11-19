@@ -3,6 +3,7 @@ import { Poppins } from "next/font/google";
 import Script from "next/script";
 import "@/app/globals.css";
 import ThemeRegistry from "@/theme/ThemeRegistry";
+import { CookieConsent } from "@/components";
 
 const poppins = Poppins({
   weight: ['300', '400', '500', '600', '700', '800'],
@@ -63,29 +64,19 @@ export default function RootLayout({
   return (
     <html lang="en" className={poppins.variable}>
       <head>
+        {/* Google AdSense */}
         <Script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2545121987507171"
           crossOrigin="anonymous"
           strategy="afterInteractive"
         />
-        <Script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=G-CVTTPBHKX5"
-          strategy="afterInteractive"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-CVTTPBHKX5');
-          `}
-        </Script>
+        {/* Note: Google Analytics is loaded via CookieConsent component after user consent */}
       </head>
       <body className="antialiased font-sans min-h-screen bg-white text-foreground">
         <ThemeRegistry>
           {children}
+          <CookieConsent />
         </ThemeRegistry>
       </body>
     </html>

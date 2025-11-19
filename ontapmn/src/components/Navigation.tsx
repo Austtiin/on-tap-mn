@@ -1,6 +1,6 @@
-'use client'
+"use client"
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
@@ -18,11 +18,21 @@ import CloseIcon from '@mui/icons-material/Close'
 import Typography from '@mui/material/Typography'
 
 const navigation = [
-  { name: 'Bar Bingo', href: '/bar-bingo' },
-  { name: 'Meat Raffles', href: '/meat-raffles' },
-  { name: 'Karaoke', href: '/karaoke' },
-  { name: 'Trivia', href: '/trivia' },
-  { name: 'Live Music', href: '/live-music' },
+  { name: 'Home', href: '/' },
+  { name: 'Events', href: '/events' },
+  { name: 'About', href: '/about' },
+  { name: 'Advertise', href: '/advertise' },
+  { name: 'Contact', href: '/contact' },
+]
+
+const mobileNavigation = [
+  { name: 'Home', href: '/' },
+  { name: 'All Events', href: '/events' },
+  { name: 'Bar Bingo', href: '/events?cats=Bar+Bingo' },
+  { name: 'Meat Raffles', href: '/events?cats=Meat+Raffles' },
+  { name: 'Karaoke', href: '/events?cats=Karaoke' },
+  { name: 'Trivia', href: '/events?cats=Trivia' },
+  { name: 'Live Music', href: '/events?cats=Live+Music' },
   { name: 'About', href: '/about' },
   { name: 'Advertise', href: '/advertise' },
   { name: 'Contact', href: '/contact' },
@@ -30,11 +40,52 @@ const navigation = [
 
 export function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => setIsScrolled(window.scrollY > 10)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   return (
-    <AppBar position="sticky" color="inherit" elevation={1}>
+    <AppBar
+      position="sticky"
+      color="transparent"
+      elevation={isScrolled ? 2 : 0}
+      sx={{
+        backdropFilter: isScrolled ? 'saturate(180%) blur(10px)' : 'none',
+        backgroundColor: isScrolled ? 'rgba(255,255,255,0.8)' : 'transparent',
+        transition: 'all 200ms ease',
+        borderBottom: isScrolled ? '1px solid rgba(0,0,0,0.05)' : 'none',
+      }}
+    >
       {/* Advertising Banner Space */}
-      <Box sx={{ bgcolor: 'secondary.main', textAlign: 'center', py: 1 }}>
+      <Box
+        sx={{
+          bgcolor: 'secondary.main',
+          textAlign: 'center',
+          py: isScrolled ? 0.25 : 1,
+          opacity: isScrolled ? 0.85 : 1,
+          position: 'relative',
+          overflow: 'hidden',
+          '&::before': {
+            content: '""',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.12) 50%, transparent 100%)',
+            animation: 'slide 3s ease-in-out infinite',
+          },
+          '@keyframes slide': {
+            '0%': { transform: 'translateX(-100%)' },
+            '100%': { transform: 'translateX(100%)' },
+          },
+        }}
+      >
         <Container>
           <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, alignItems: 'center' }}>
             <Typography variant="body2" component="span">
@@ -44,11 +95,7 @@ export function Navigation() {
               <Typography
                 variant="body2"
                 component="span"
-                sx={{
-                  textDecoration: 'underline',
-                  color: 'text.primary',
-                  '&:hover': { color: 'primary.dark' },
-                }}
+                sx={{ textDecoration: 'underline', color: 'text.primary', '&:hover': { color: 'primary.dark' } }}
               >
                 Learn More
               </Typography>
@@ -58,7 +105,10 @@ export function Navigation() {
       </Box>
 
       <Container>
-        <Toolbar disableGutters sx={{ justifyContent: 'space-between' }}>
+        <Toolbar
+          disableGutters
+          sx={{ justifyContent: 'space-between', py: isScrolled ? 0.5 : 1.5, transition: 'padding 200ms ease' }}
+        >
           {/* Logo */}
           <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 12 }}>
             <Box
@@ -66,77 +116,67 @@ export function Navigation() {
               src="/logos/ontapMNlogo.webp"
               alt="OnTap MN Logo"
               sx={{
-                width: { xs: 56, sm: 64 },
-                height: { xs: 56, sm: 64 },
+                width: isScrolled ? { xs: 44, sm: 52 } : { xs: 56, sm: 64 },
+                height: isScrolled ? { xs: 44, sm: 52 } : { xs: 56, sm: 64 },
                 objectFit: 'contain',
+                transition: 'all 200ms ease',
               }}
             />
             <Typography
               variant="h6"
               component="span"
-              sx={{ color: 'primary.main', fontWeight: 700, fontSize: '1.5rem', display: { xs: 'none', sm: 'block' } }}
+              sx={{ color: 'primary.main', fontWeight: 700, fontSize: isScrolled ? '1.25rem' : '1.5rem', display: { xs: 'none', sm: 'block' }, transition: 'font-size 200ms ease' }}
             >
               OnTap MN
             </Typography>
           </Link>
 
           {/* Desktop Navigation */}
-          <Box sx={{ display: { xs: 'none', lg: 'flex' }, gap: 3 }}>
+          <Box sx={{ display: { xs: 'none', lg: 'flex' }, gap: 3, alignItems: 'center' }}>
             {navigation.map((item) => (
               <Link key={item.name} href={item.href} style={{ textDecoration: 'none' }}>
-                <Button
-                  sx={{
-                    color: 'text.primary',
-                    fontWeight: 500,
-                    '&:hover': { color: 'primary.main' },
-                  }}
-                >
+                <Button sx={{ color: 'text.primary', fontWeight: 500, '&:hover': { color: 'primary.main' } }}>
                   {item.name}
                 </Button>
               </Link>
             ))}
+            {/* Primary CTA */}
+            <Link href="/apply" style={{ textDecoration: 'none' }}>
+              <Button
+                variant="contained"
+                sx={{ ml: 1, bgcolor: '#8b1538', '&:hover': { bgcolor: '#6b1028' }, color: '#fff', fontWeight: 700 }}
+              >
+                Submit Event
+              </Button>
+            </Link>
           </Box>
 
           {/* Mobile menu button */}
-          <IconButton
-            sx={{ display: { lg: 'none' } }}
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle mobile menu"
-          >
+          <IconButton sx={{ display: { lg: 'none' } }} onClick={() => setMobileMenuOpen(!mobileMenuOpen)} aria-label="Toggle mobile menu">
             {mobileMenuOpen ? <CloseIcon /> : <MenuIcon />}
           </IconButton>
         </Toolbar>
 
         {/* Mobile Navigation Drawer */}
-        <Drawer
-          anchor="right"
-          open={mobileMenuOpen}
-          onClose={() => setMobileMenuOpen(false)}
-          sx={{ display: { lg: 'none' } }}
-        >
-          <Box sx={{ width: 250, pt: 2 }}>
+        <Drawer anchor="right" open={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} sx={{ display: { lg: 'none' } }}>
+          <Box sx={{ width: 260, pt: 2 }}>
             <List>
-              {navigation.map((item) => (
+              {mobileNavigation.map((item) => (
                 <ListItem key={item.name} disablePadding>
-                  <Link
-                    href={item.href}
-                    style={{ textDecoration: 'none', width: '100%' }}
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
+                  <Link href={item.href} style={{ textDecoration: 'none', width: '100%' }} onClick={() => setMobileMenuOpen(false)}>
                     <ListItemButton>
-                      <ListItemText
-                        primary={item.name}
-                        sx={{
-                          '& .MuiListItemText-primary': {
-                            color: 'text.primary',
-                            fontWeight: 500,
-                          },
-                        }}
-                      />
+                      <ListItemText primary={item.name} sx={{ '& .MuiListItemText-primary': { color: 'text.primary', fontWeight: 500 } }} />
                     </ListItemButton>
                   </Link>
                 </ListItem>
               ))}
+              <ListItem disablePadding>
+                <Link href="/apply" style={{ textDecoration: 'none', width: '100%' }} onClick={() => setMobileMenuOpen(false)}>
+                  <ListItemButton>
+                    <ListItemText primary="Submit Event" sx={{ '& .MuiListItemText-primary': { color: '#8b1538', fontWeight: 700 } }} />
+                  </ListItemButton>
+                </Link>
+              </ListItem>
             </List>
           </Box>
         </Drawer>

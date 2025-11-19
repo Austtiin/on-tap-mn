@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState, useCallback, useEffect, useTransition } from 'react'
+import { useMemo, useState, useCallback, useEffect } from 'react'
 import Link from 'next/link'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
@@ -8,15 +8,11 @@ import Typography from '@mui/material/Typography'
 import Paper from '@mui/material/Paper'
 import Chip from '@mui/material/Chip'
 import Button from '@mui/material/Button'
-import Grid from '@mui/material/Grid'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
-import Divider from '@mui/material/Divider'
-import Stack from '@mui/material/Stack'
 import Accordion from '@mui/material/Accordion'
 import AccordionSummary from '@mui/material/AccordionSummary'
 import AccordionDetails from '@mui/material/AccordionDetails'
-import Skeleton from '@mui/material/Skeleton'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import CasinoIcon from '@mui/icons-material/Casino'
 import LocalDiningIcon from '@mui/icons-material/LocalDining'
@@ -138,12 +134,39 @@ export default function EventsPage() {
   const [cats, setCats] = useState<Category[]>([])
   const [days, setDays] = useState<DayKey[]>([])
   const [times, setTimes] = useState<TimeKey[]>([])
-  const [isPending, startTransition] = useTransition()
+  const [filtersOpen, setFiltersOpen] = useState(false)
+
+  // Load filters from URL on mount
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const catsParam = params.get('cats')
+    const daysParam = params.get('days')
+    const timesParam = params.get('times')
+
+    if (catsParam) {
+      const categoryValues = catsParam.split(',').filter((c) => 
+        CATEGORY_DEFS.some((def) => def.key === c)
+      ) as Category[]
+      setCats(categoryValues)
+    }
+    if (daysParam) {
+      const dayValues = daysParam.split(',').filter((d) => 
+        DAYS.some((day) => day.key === d)
+      ) as DayKey[]
+      setDays(dayValues)
+    }
+    if (timesParam) {
+      const timeValues = timesParam.split(',').filter((t) => 
+        t in TIME_RANGES
+      ) as TimeKey[]
+      setTimes(timeValues)
+    }
+  }, [])
 
   // Sync selected filters to the URL for shareability
   const syncToQuery = useCallback(() => {
     const params = new URLSearchParams()
-    if (cats.length) params.set('cat', cats.join(','))
+    if (cats.length) params.set('cats', cats.join(','))
     if (days.length) params.set('days', days.join(','))
     if (times.length) params.set('times', times.join(','))
     const url = params.toString() ? `/events?${params.toString()}` : '/events'
@@ -179,37 +202,100 @@ export default function EventsPage() {
   }, [cats, days, times])
 
   const clearAll = () => {
-    startTransition(() => {
-      setCats([])
-      setDays([])
-      setTimes([])
-    })
+    setCats([])
+    setDays([])
+    setTimes([])
   }
 
   const toggleCat = (key: Category) => {
-    startTransition(() => {
-      setCats((prev) => (prev.includes(key) ? prev.filter((c) => c !== key) : [...prev, key]))
-    })
+    setCats((prev) => (prev.includes(key) ? prev.filter((c) => c !== key) : [...prev, key]))
   }
   const toggleDay = (key: DayKey) => {
-    startTransition(() => {
-      setDays((prev) => (prev.includes(key) ? prev.filter((d) => d !== key) : [...prev, key]))
-    })
+    setDays((prev) => (prev.includes(key) ? prev.filter((d) => d !== key) : [...prev, key]))
   }
   const toggleTime = (key: TimeKey) => {
-    startTransition(() => {
-      setTimes((prev) => (prev.includes(key) ? prev.filter((t) => t !== key) : [...prev, key]))
-    })
+    setTimes((prev) => (prev.includes(key) ? prev.filter((t) => t !== key) : [...prev, key]))
   }
 
   return (
     <>
       <Navigation />
-      <main>
-        <Box component="section" sx={{ py: { xs: 6, lg: 8 }, bgcolor: 'background.default' }}>
+      <Box
+        component="main"
+        sx={{
+          position: 'relative',
+          background: 'linear-gradient(180deg, #fffbeb 0%, #ffffff 50%, #fffbeb 100%)',
+          minHeight: '100vh',
+          '&::before': {
+            content: '""',
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            width: '50%',
+            height: '500px',
+            background: 'radial-gradient(ellipse at top right, rgba(251, 191, 36, 0.08) 0%, transparent 70%)',
+            pointerEvents: 'none',
+          },
+        }}
+      >
+        {/* Decorative Diagonal Lines */}
+        <Box
+          sx={{
+            position: 'absolute',
+            top: '30%',
+            left: '5%',
+            width: '200px',
+            height: '2px',
+            background: 'linear-gradient(90deg, transparent, rgba(139, 21, 56, 0.1), transparent)',
+            transform: 'rotate(-45deg)',
+            pointerEvents: 'none',
+          }}
+        />
+        <Box
+          sx={{
+            position: 'absolute',
+            bottom: '20%',
+            right: '10%',
+            width: '150px',
+            height: '2px',
+            background: 'linear-gradient(90deg, transparent, rgba(251, 191, 36, 0.15), transparent)',
+            transform: 'rotate(45deg)',
+            pointerEvents: 'none',
+          }}
+        />
+        <Box
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            right: '20%',
+            width: '100px',
+            height: '100px',
+            border: '2px dashed rgba(139, 21, 56, 0.06)',
+            borderRadius: '50%',
+            pointerEvents: 'none',
+            animation: 'spin 30s linear infinite',
+            '@keyframes spin': {
+              '0%': { transform: 'rotate(0deg)' },
+              '100%': { transform: 'rotate(360deg)' },
+            },
+          }}
+        />
+
+        <Box component="section" sx={{ py: { xs: 6, lg: 8 } }}>
           <Container>
             <Box sx={{ textAlign: 'center', mb: 4 }}>
-              <Typography variant="h2" sx={{ fontSize: { xs: '1.75rem', md: '2rem' }, fontWeight: 700 }}>
+              <Typography 
+                variant="h2" 
+                sx={{ 
+                  fontSize: { xs: '1.5rem', md: '1.75rem' }, 
+                  fontWeight: 700,
+                  background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
+                  backgroundClip: 'text',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  mb: 2,
+                }}
+              >
                 Explore Events
               </Typography>
               <Typography variant="body1" sx={{ color: 'text.secondary', maxWidth: 720, mx: 'auto' }}>
@@ -217,8 +303,15 @@ export default function EventsPage() {
               </Typography>
             </Box>
             <Box sx={{ display: { xs: 'block', md: 'flex' }, gap: 3 }}>
+              {/* Mobile Filters Button */}
+              <Box sx={{ display: { xs: 'flex', md: 'none' }, justifyContent: 'space-between', mb: 2 }}>
+                <Button variant="contained" onClick={() => setFiltersOpen(true)}>
+                  Filters{[...cats, ...days, ...times].length ? ` (${[...cats, ...days, ...times].length})` : ''}
+                </Button>
+                <Button variant="text" onClick={clearAll}>Reset</Button>
+              </Box>
               {/* Sidebar */}
-              <Box sx={{ width: { md: 240 }, flexShrink: 0, mb: { xs: 3, md: 0 } }}>
+              <Box sx={{ width: { md: 240 }, flexShrink: 0, mb: { xs: 3, md: 0 }, display: { xs: 'none', md: 'block' } }}>
                 <Paper
                   variant="outlined"
                   sx={{
@@ -320,8 +413,8 @@ export default function EventsPage() {
                   </Accordion>
                   <Box sx={{ display: 'flex', gap: 1, justifyContent: 'space-between' }}>
                     <Button variant="text" size="small" onClick={clearAll}>Reset</Button>
-                    <Link href="/submit-event" style={{ textDecoration: 'none' }}>
-                      <Button variant="contained" size="small">Submit</Button>
+                    <Link href="/apply" style={{ textDecoration: 'none' }}>
+                      <Button variant="contained" size="small">Apply</Button>
                     </Link>
                   </Box>
                 </Paper>
@@ -347,21 +440,32 @@ export default function EventsPage() {
                     </>
                   )}
                 </Box>
-                <Grid container spacing={3}>
-                  {isPending
-                    ? Array.from({ length: 6 }).map((_, i) => (
-                        <Grid item xs={12} sm={6} lg={4} key={i}>
-                          <Card sx={{ height: '100%', borderRadius: 3, p: 2 }}>
-                            <Skeleton variant="text" width="60%" />
-                            <Skeleton variant="text" />
-                            <Skeleton variant="rectangular" height={48} sx={{ my: 1, borderRadius: 2 }} />
-                            <Skeleton variant="text" width="40%" />
-                          </Card>
-                        </Grid>
-                      ))
-                    : filtered.map((event) => (
-                        <Grid item xs={12} sm={6} lg={4} key={event.id}>
+
+                {/* AdSense - Top Banner Before Events */}
+                <Card sx={{ mb: 3, boxShadow: 2, borderRadius: 3, border: '2px dashed', borderColor: 'grey.300' }}>
+                  <CardContent sx={{ py: 3 }}>
+                    <Box sx={{ textAlign: 'center' }}>
+                      <Typography variant="caption" sx={{ color: 'text.secondary', fontWeight: 600, textTransform: 'uppercase', letterSpacing: 1 }}>
+                        Advertisement
+                      </Typography>
+                      <Box sx={{ bgcolor: 'white', borderRadius: 2, mt: 2, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', border: '2px solid', borderColor: 'grey.200', minHeight: '90px' }}>
+                        <Typography sx={{ color: 'text.secondary', fontWeight: 500 }}>AdSense Leaderboard</Typography>
+                        <Typography variant="caption" sx={{ color: 'text.secondary' }}>728x90 or Responsive</Typography>
+                      </Box>
+                    </Box>
+                  </CardContent>
+                </Card>
+
+                <Box
+                  sx={{
+                    display: 'grid',
+                    gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', lg: 'repeat(3, 1fr)' },
+                    gap: 3,
+                  }}
+                >
+                  {filtered.map((event) => (
                           <Card
+                            key={event.id}
                             sx={{
                               height: '100%',
                               display: 'flex',
@@ -369,7 +473,24 @@ export default function EventsPage() {
                               borderRadius: 3,
                               overflow: 'hidden',
                               position: 'relative',
-                              '&:hover': { boxShadow: 6, transform: 'translateY(-4px)' },
+                              '&::before': {
+                                content: '\"\"',
+                                position: 'absolute',
+                                top: 0,
+                                left: '-100%',
+                                width: '50%',
+                                height: '100%',
+                                background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent)',
+                                transition: 'left 0.6s ease',
+                                pointerEvents: 'none',
+                              },
+                              '&:hover': { 
+                                boxShadow: 6, 
+                                transform: 'translateY(-4px)',
+                                '&::before': {
+                                  left: '150%',
+                                },
+                              },
                               transition: 'all 0.25s ease',
                               border: '1px solid',
                               borderColor: 'grey.200'
@@ -417,15 +538,177 @@ export default function EventsPage() {
                               </Box>
                             </CardContent>
                           </Card>
-                        </Grid>
                       ))}
-                </Grid>
+                  
+                  {/* AdSense - Mid-Page Display Ad - Every 6 events */}
+                  {filtered.map((_, index) => (
+                    (index + 1) % 6 === 0 && index < filtered.length - 1 && (
+                      <Card key={`ad-${index}`} sx={{ gridColumn: '1 / -1', boxShadow: 2, borderRadius: 3, border: '2px dashed', borderColor: 'grey.300' }}>
+                        <CardContent sx={{ py: 3 }}>
+                          <Box sx={{ textAlign: 'center' }}>
+                            <Typography variant="caption" sx={{ color: 'text.secondary', fontWeight: 600, textTransform: 'uppercase', letterSpacing: 1 }}>
+                              Advertisement
+                            </Typography>
+                            <Box sx={{ bgcolor: 'white', borderRadius: 2, mt: 2, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', border: '2px solid', borderColor: 'grey.200', minHeight: '250px' }}>
+                              <Typography sx={{ color: 'text.secondary', fontWeight: 500 }}>AdSense Display Ad</Typography>
+                              <Typography variant="caption" sx={{ color: 'text.secondary' }}>300x250 or Responsive</Typography>
+                            </Box>
+                          </Box>
+                        </CardContent>
+                      </Card>
+                    )
+                  ))}
+                </Box>
+
+                {/* AdSense - After Events List */}
+                {filtered.length > 0 && (
+                  <Card sx={{ mt: 3, boxShadow: 2, borderRadius: 3, border: '2px dashed', borderColor: 'grey.300' }}>
+                    <CardContent sx={{ py: 3 }}>
+                      <Box sx={{ textAlign: 'center' }}>
+                        <Typography variant="caption" sx={{ color: 'text.secondary', fontWeight: 600, textTransform: 'uppercase', letterSpacing: 1 }}>
+                          Advertisement
+                        </Typography>
+                        <Box sx={{ bgcolor: 'white', borderRadius: 2, mt: 2, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', border: '2px solid', borderColor: 'grey.200', minHeight: '90px' }}>
+                          <Typography sx={{ color: 'text.secondary', fontWeight: 500 }}>AdSense Banner</Typography>
+                          <Typography variant="caption" sx={{ color: 'text.secondary' }}>970x90 or Responsive</Typography>
+                        </Box>
+                      </Box>
+                    </CardContent>
+                  </Card>
+                )}
               </Box>
             </Box>
             
           </Container>
         </Box>
-      </main>
+      </Box>
+      {/* Mobile Filters Drawer */}
+      <Box component="aside" sx={{ display: { md: 'none' } }}>
+        <Paper
+          elevation={0}
+          sx={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            height: '100vh',
+            width: '85vw',
+            maxWidth: 360,
+            transform: `translateX(${filtersOpen ? '0' : '-100%'})`,
+            transition: 'transform 250ms ease',
+            zIndex: (t) => t.zIndex.drawer,
+            borderRight: '1px solid',
+            borderColor: 'grey.200',
+            background: 'linear-gradient(145deg, rgba(255,255,255,0.98), rgba(255,255,255,0.92))',
+          }}
+          role="dialog"
+          aria-label="Filters"
+        >
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 2 }}>
+            <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>Filters</Typography>
+            <Button variant="text" onClick={() => setFiltersOpen(false)}>Close</Button>
+          </Box>
+          <Box sx={{ p: 2, pt: 0 }}>
+            {/* Reuse the same controls */}
+            <Accordion disableGutters defaultExpanded sx={{ bgcolor: 'transparent', boxShadow: 'none' }}>
+              <AccordionSummary expandIcon={<ExpandMoreIcon fontSize="small" />}> 
+                <Typography variant="caption" sx={{ fontWeight: 600 }}>Categories</Typography>
+                <Box sx={{ ml: 'auto' }}>
+                  <Chip size="small" label={cats.length} color={cats.length ? 'primary' : 'default'} />
+                </Box>
+              </AccordionSummary>
+              <AccordionDetails sx={{ pt: 0.5 }}>
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.75 }}>
+                  {CATEGORY_DEFS.map(({ key, icon: Icon, color }) => {
+                    const selected = cats.includes(key)
+                    return (
+                      <Chip
+                        key={key}
+                        size="small"
+                        icon={<Icon sx={{ color: selected ? 'inherit' : color }} />}
+                        label={key}
+                        color={selected ? 'primary' : undefined}
+                        variant={selected ? 'filled' : 'outlined'}
+                        onClick={() => toggleCat(key)}
+                        sx={{ fontWeight: 600 }}
+                      />
+                    )
+                  })}
+                </Box>
+              </AccordionDetails>
+            </Accordion>
+
+            <Accordion disableGutters defaultExpanded sx={{ bgcolor: 'transparent', boxShadow: 'none' }}>
+              <AccordionSummary expandIcon={<ExpandMoreIcon fontSize="small" />}> 
+                <Typography variant="caption" sx={{ fontWeight: 600 }}>Days</Typography>
+                <Box sx={{ ml: 'auto' }}>
+                  <Chip size="small" label={days.length} color={days.length ? 'primary' : 'default'} />
+                </Box>
+              </AccordionSummary>
+              <AccordionDetails sx={{ pt: 0.5 }}>
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.75 }}>
+                  {DAYS.map(({ key, label }) => {
+                    const selected = days.includes(key)
+                    return (
+                      <Chip
+                        key={key}
+                        size="small"
+                        label={label}
+                        color={selected ? 'primary' : undefined}
+                        variant={selected ? 'filled' : 'outlined'}
+                        onClick={() => toggleDay(key)}
+                        sx={{ minWidth: 44, justifyContent: 'center', fontWeight: 600 }}
+                      />
+                    )
+                  })}
+                </Box>
+              </AccordionDetails>
+            </Accordion>
+
+            <Accordion disableGutters defaultExpanded sx={{ bgcolor: 'transparent', boxShadow: 'none' }}>
+              <AccordionSummary expandIcon={<ExpandMoreIcon fontSize="small" />}> 
+                <Typography variant="caption" sx={{ fontWeight: 600 }}>Time</Typography>
+                <Box sx={{ ml: 'auto' }}>
+                  <Chip size="small" label={times.length} color={times.length ? 'primary' : 'default'} />
+                </Box>
+              </AccordionSummary>
+              <AccordionDetails sx={{ pt: 0.5 }}>
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.75 }}>
+                  {(Object.keys(TIME_RANGES) as TimeKey[]).map((k) => {
+                    const selected = times.includes(k)
+                    return (
+                      <Chip
+                        key={k}
+                        size="small"
+                        label={TIME_RANGES[k].label}
+                        color={selected ? 'primary' : undefined}
+                        variant={selected ? 'filled' : 'outlined'}
+                        onClick={() => toggleTime(k)}
+                        sx={{ fontWeight: 600 }}
+                      />
+                    )
+                  })}
+                </Box>
+              </AccordionDetails>
+            </Accordion>
+
+            <Box sx={{ display: 'flex', gap: 1, justifyContent: 'space-between', mt: 1 }}>
+              <Button variant="text" size="small" onClick={clearAll}>Reset</Button>
+              <Button variant="contained" size="small" onClick={() => setFiltersOpen(false)}>Done</Button>
+            </Box>
+          </Box>
+        </Paper>
+        {/* Backdrop */}
+        <Box
+          onClick={() => setFiltersOpen(false)}
+          sx={{
+            display: filtersOpen ? 'block' : 'none',
+            position: 'fixed',
+            inset: 0,
+            backgroundColor: 'rgba(0,0,0,0.25)',
+            zIndex: (t) => t.zIndex.drawer - 1,
+          }}
+        />
+      </Box>
       <Footer />
     </>
   )

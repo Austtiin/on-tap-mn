@@ -3,6 +3,7 @@ import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import Stack from '@mui/material/Stack'
+import Link from 'next/link'
 
 export function HeroBanner() {
   return (
@@ -12,6 +13,22 @@ export function HeroBanner() {
         position: 'relative',
         color: 'white',
         overflow: 'hidden',
+        '&::before': {
+          content: '\"\"',
+          position: 'absolute',
+          top: 0,
+          right: 0,
+          width: '40%',
+          height: '100%',
+          background: 'radial-gradient(circle at top right, rgba(251, 191, 36, 0.15), transparent 70%)',
+          animation: 'pulse 4s ease-in-out infinite',
+          pointerEvents: 'none',
+          zIndex: 2,
+        },
+        '@keyframes pulse': {
+          '0%, 100%': { opacity: 0.4 },
+          '50%': { opacity: 0.8 },
+        },
       }}
     >
       {/* Background Image */}
@@ -38,8 +55,57 @@ export function HeroBanner() {
           left: 0,
           right: 0,
           bottom: 0,
-          background: 'linear-gradient(to bottom right, rgba(139, 21, 56, 0.85), rgba(107, 16, 40, 0.90))',
+          background: 'linear-gradient(135deg, rgba(139, 21, 56, 0.85) 0%, rgba(107, 16, 40, 0.75) 100%)',
           zIndex: 1,
+        }}
+      />
+
+      {/* Decorative Circles */}
+      <Box
+        sx={{
+          position: 'absolute',
+          top: '10%',
+          left: '5%',
+          width: '150px',
+          height: '150px',
+          borderRadius: '50%',
+          border: '2px solid rgba(251, 191, 36, 0.2)',
+          zIndex: 1,
+          animation: 'float-slow 8s ease-in-out infinite',
+          '@keyframes float-slow': {
+            '0%, 100%': { transform: 'translateY(0px)' },
+            '50%': { transform: 'translateY(-20px)' },
+          },
+        }}
+      />
+      <Box
+        sx={{
+          position: 'absolute',
+          bottom: '15%',
+          right: '8%',
+          width: '100px',
+          height: '100px',
+          borderRadius: '50%',
+          border: '2px solid rgba(251, 191, 36, 0.15)',
+          zIndex: 1,
+          animation: 'float-slow 6s ease-in-out infinite 1s',
+        }}
+      />
+      <Box
+        sx={{
+          position: 'absolute',
+          top: '60%',
+          left: '10%',
+          width: '60px',
+          height: '60px',
+          borderRadius: '50%',
+          bgcolor: 'rgba(251, 191, 36, 0.1)',
+          zIndex: 1,
+          animation: 'pulse-size 3s ease-in-out infinite',
+          '@keyframes pulse-size': {
+            '0%, 100%': { transform: 'scale(1)' },
+            '50%': { transform: 'scale(1.2)' },
+          },
         }}
       />
 
@@ -47,67 +113,56 @@ export function HeroBanner() {
       <Container sx={{ position: 'relative', zIndex: 2 }}>
         <Box sx={{ py: { xs: 8, md: 10, lg: 12 } }}>
           <Box sx={{ textAlign: 'center' }}>
-            {/* Logo */}
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                mb: 3,
-              }}
-            >
+            {/* Logo (smaller to prioritize copy) */}
+            <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
               <Box
                 component="img"
                 src="/logos/ontapMNlogo.webp"
                 alt="OnTap MN Logo"
-                sx={{
-                  width: { xs: 140, md: 200, lg: 220 },
-                  height: { xs: 140, md: 200, lg: 220 },
-                  objectFit: 'contain',
-                }}
+                sx={{ width: { xs: 120, md: 160, lg: 200 }, height: { xs: 120, md: 160, lg: 180 }, objectFit: 'contain' }}
               />
             </Box>
 
-            {/* Main Heading */}
+            {/* Main Heading: concise value prop */}
             <Typography
               variant="h1"
               sx={{
                 fontSize: { xs: '2rem', md: '2.25rem', lg: '2.5rem' },
-                fontWeight: 'bold',
-                mb: 2,
-                lineHeight: 1.2,
+                fontWeight: 800,
+                mb: 1.5,
+                lineHeight: 1.15,
               }}
             >
-              OnTap MN
+              Find Minnesota Bar Events Fast
             </Typography>
 
-            {/* Tagline */}
+            {/* Sub-Headline */}
             <Typography
               variant="h2"
               sx={{
-                fontSize: { xs: '1rem', md: '1.125rem', lg: '1.375rem' },
+                fontSize: { xs: '1rem', md: '1.125rem', lg: '1.25rem' },
                 color: 'rgba(255, 255, 255, 0.95)',
-                mb: 3,
+                mb: 2.5,
                 maxWidth: '896px',
                 mx: 'auto',
                 lineHeight: 1.5,
               }}
             >
-              Find Bar Bingo, Meat Raffles, and More Across Minnesota
+              See tonight’s bar bingo, meat raffles, karaoke, trivia, and live music—near you.
             </Typography>
 
-            {/* Description */}
+            {/* Supporting line (optional) */}
             <Typography
               variant="body1"
               sx={{
-                fontSize: { xs: '0.95rem', md: '1rem', lg: '1.0625rem' },
+                fontSize: { xs: '0.95rem', md: '1rem' },
                 color: 'rgba(255, 255, 255, 0.9)',
-                mb: 4,
+                mb: 3,
                 maxWidth: '672px',
                 mx: 'auto',
               }}
             >
-              Discover the best bar events happening near you. From weekly bingo nights to delicious meat raffles,
-              we&apos;ve got your entertainment covered.
+              Free and simple. Built for Minnesota’s neighborhood spots.
             </Typography>
 
             {/* CTA Buttons */}
@@ -116,34 +171,46 @@ export function HeroBanner() {
               spacing={2}
               sx={{ justifyContent: 'center', alignItems: 'center' }}
             >
-              <Button
-                component={require('next/link').default}
-                href="/events"
-                variant="contained"
-                color="secondary"
-                size="large"
-                sx={{ minWidth: 200 }}
-              >
-                Find Events Near Me
-              </Button>
-              <Button
-                component={require('next/link').default}
-                href="/events"
-                variant="outlined"
-                size="large"
-                sx={{
-                  minWidth: 200,
-                  borderColor: 'white',
-                  color: 'white',
-                  '&:hover': {
+              <Link href="/events" style={{ textDecoration: 'none' }}>
+                <Button
+                  variant="contained"
+                  size="large"
+                  sx={{ 
+                    minWidth: 200,
+                    bgcolor: '#8b1538',
+                    '&:hover': { bgcolor: '#6b1028' },
+                    color: '#fff',
+                    fontWeight: 700,
+                    animation: 'pulse-shadow 2s ease-in-out infinite',
+                    '@keyframes pulse-shadow': {
+                      '0%, 100%': { boxShadow: '0 0 0 0 rgba(139, 21, 56, 0.35)' },
+                      '50%': { boxShadow: '0 0 20px 10px rgba(139, 21, 56, 0)' },
+                    },
+                  }}
+                >
+                  Find Events Near Me
+                </Button>
+              </Link>
+              <Link href="/apply" style={{ textDecoration: 'none' }}>
+                <Button
+                  variant="outlined"
+                  size="large"
+                  sx={{
+                    minWidth: 200,
                     borderColor: 'white',
-                    bgcolor: 'white',
-                    color: 'primary.main',
-                  },
-                }}
-              >
-                Browse All Events
-              </Button>
+                    color: 'white',
+                    '&:hover': {
+                      borderColor: 'white',
+                      bgcolor: 'white',
+                      color: '#8b1538',
+                      transform: 'scale(1.05)',
+                    },
+                    transition: 'all 0.3s ease',
+                  }}
+                >
+                  Submit Your Event
+                </Button>
+              </Link>
             </Stack>
           </Box>
 

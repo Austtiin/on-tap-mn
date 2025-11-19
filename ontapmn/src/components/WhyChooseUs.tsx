@@ -1,7 +1,6 @@
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
-import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
 import LocationOnIcon from '@mui/icons-material/LocationOn'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
@@ -64,12 +63,18 @@ export function WhyChooseUs() {
           </Typography>
         </Box>
 
-        <Grid container spacing={4}>
-          {features.map((feature, index) => {
+        <Box
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)' },
+            gap: 4,
+          }}
+        >
+          {features.map((feature) => {
             const IconComponent = feature.icon
             return (
-              <Grid item xs={12} sm={6} lg={3} key={index}>
                 <Paper
+                  key={feature.title}
                   elevation={0}
                   sx={{
                     height: '100%',
@@ -122,10 +127,9 @@ export function WhyChooseUs() {
                     {feature.description}
                   </Typography>
                 </Paper>
-              </Grid>
             )
           })}
-        </Grid>
+        </Box>
       </Container>
     </Box>
   )

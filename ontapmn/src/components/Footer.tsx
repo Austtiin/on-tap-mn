@@ -2,7 +2,6 @@ import Link from 'next/link'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
-import Grid from '@mui/material/Grid'
 import IconButton from '@mui/material/IconButton'
 import MuiLink from '@mui/material/Link'
 import FacebookIcon from '@mui/icons-material/Facebook'
@@ -11,17 +10,17 @@ import TwitterIcon from '@mui/icons-material/Twitter'
 
 const footerLinks = {
   'Event Categories': [
-    { name: 'Bar Bingo', href: '/bar-bingo' },
-    { name: 'Meat Raffles', href: '/meat-raffles' },
-    { name: 'Karaoke', href: '/karaoke' },
-    { name: 'Trivia', href: '/trivia' },
-    { name: 'Live Music', href: '/live-music' },
+    { name: 'Bar Bingo', href: '/events?cats=Bar+Bingo' },
+    { name: 'Meat Raffles', href: '/events?cats=Meat+Raffles' },
+    { name: 'Karaoke', href: '/events?cats=Karaoke' },
+    { name: 'Trivia', href: '/events?cats=Trivia' },
+    { name: 'Live Music', href: '/events?cats=Live+Music' },
   ],
   'Company': [
     { name: 'About Us', href: '/about' },
     { name: 'Contact', href: '/contact' },
     { name: 'Advertise', href: '/advertise' },
-    { name: 'Submit Event', href: '/submit-event' },
+    { name: 'Apply to List Events', href: '/apply' },
   ],
   'Legal': [
     { name: 'Privacy Policy', href: '/privacy' },
@@ -31,12 +30,44 @@ const footerLinks = {
 
 export function Footer() {
   return (
-    <Box component="footer" sx={{ bgcolor: 'text.primary', color: 'white' }}>
+    <Box 
+      component="footer" 
+      sx={{ 
+        bgcolor: 'text.primary', 
+        color: 'white',
+        position: 'relative',
+        overflow: 'hidden',
+        '&::before': {
+          content: '""',
+          position: 'absolute',
+          top: '-50%',
+          left: '-10%',
+          width: '50%',
+          height: '200%',
+          background: 'radial-gradient(circle, rgba(251, 191, 36, 0.05) 0%, transparent 70%)',
+          pointerEvents: 'none',
+        },
+        '&::after': {
+          content: '""',
+          position: 'absolute',
+          bottom: 0,
+          right: 0,
+          width: '30%',
+          height: '100%',
+          backgroundImage: `
+            linear-gradient(rgba(251, 191, 36, 0.02) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(251, 191, 36, 0.02) 1px, transparent 1px)
+          `,
+          backgroundSize: '30px 30px',
+          pointerEvents: 'none',
+        },
+      }}
+    >
       <Container>
         <Box sx={{ py: 6 }}>
-          <Grid container spacing={4}>
+          <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)' }, gap: 4 }}>
             {/* Brand Section */}
-            <Grid item xs={12} md={6} lg={3}>
+            <Box>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 2 }}>
                 <Box
                   component="img"
@@ -96,50 +127,50 @@ export function Footer() {
                   }}
                   aria-label="Twitter"
                 >
-                  <TwitterIcon />
-                </IconButton>
-              </Box>
-            </Grid>
-
-            {/* Footer Links */}
-            {Object.entries(footerLinks).map(([title, links]) => (
-              <Grid item xs={12} sm={4} md={6} lg={3} key={title}>
-                <Typography
-                  variant="h6"
-                  sx={{
-                    color: 'secondary.main',
-                    fontWeight: 600,
-                    fontSize: '1rem',
-                    mb: 2,
-                  }}
-                >
-                  {title}
-                </Typography>
-                <Box component="ul" sx={{ listStyle: 'none', p: 0, m: 0 }}>
-                  {links.map((link) => (
-                    <Box component="li" key={link.name} sx={{ mb: 1 }}>
-                      <MuiLink
-                        component={Link}
-                        href={link.href}
-                        sx={{
-                          color: 'grey.300',
-                          textDecoration: 'none',
-                          fontSize: '0.875rem',
-                          '&:hover': { color: 'white' },
-                          transition: 'color 0.2s ease',
-                        }}
-                      >
-                        {link.name}
-                      </MuiLink>
-                    </Box>
-                  ))}
-                </Box>
-              </Grid>
-            ))}
-          </Grid>
+              <TwitterIcon />
+            </IconButton>
+          </Box>
         </Box>
 
-        {/* Bottom Border */}
+        {/* Footer Links */}
+        {Object.entries(footerLinks).map(([title, links]) => (
+          <Box key={title}>
+            <Typography
+              variant="h6"
+              sx={{
+                color: 'secondary.main',
+                fontWeight: 600,
+                fontSize: '1rem',
+                mb: 2,
+              }}
+            >
+              {title}
+            </Typography>
+            <Box component="ul" sx={{ listStyle: 'none', p: 0, m: 0 }}>
+              {links.map((link) => (
+                <Box component="li" key={link.name} sx={{ mb: 1 }}>
+                  <MuiLink
+                    component={Link}
+                    href={link.href}
+                    sx={{
+                      color: 'grey.300',
+                      textDecoration: 'none',
+                      fontSize: '0.875rem',
+                      '&:hover': { color: 'white' },
+                      transition: 'color 0.2s ease',
+                    }}
+                  >
+                    {link.name}
+                  </MuiLink>
+                </Box>
+              ))}
+            </Box>
+          </Box>
+        ))}
+        </Box>
+      </Box>
+
+      {/* Bottom Border */}
         <Box
           sx={{
             borderTop: 1,
