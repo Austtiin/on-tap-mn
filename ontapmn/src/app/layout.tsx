@@ -29,6 +29,11 @@ export const metadata: Metadata = {
   creator: "OnTap MN",
   publisher: "OnTap MN",
   metadataBase: new URL("https://ontap-mn.com"),
+  verification: {
+    other: {
+      'google-adsense-account': 'ca-pub-2545121987507171',
+    },
+  },
   openGraph: {
     title: "OnTap MN - Find Bar Bingo, Meat Raffles & More Across Minnesota",
     description: "Discover bar bingo, meat raffles, karaoke, trivia nights, and live music events happening across Minnesota.",

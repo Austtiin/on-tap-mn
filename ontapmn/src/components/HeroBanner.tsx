@@ -148,7 +148,7 @@ export function HeroBanner() {
                 lineHeight: 1.5,
               }}
             >
-              See tonight’s bar bingo, meat raffles, karaoke, trivia, and live music—near you.
+              See tonight’s bar bingo, meat raffles, karaoke, trivia, and live music - near you.
             </Typography>
 
             {/* Supporting line (optional) */}

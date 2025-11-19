@@ -239,7 +239,7 @@ export default function PrivacyPage() {
                       If you have questions or concerns about this Privacy Policy or our data practices, please contact us:
                     </p>
                     <div className="space-y-2 text-gray-700">
-                      <p><strong>Email:</strong> privacy@ontapmn.com</p>
+                      <p><strong>Email:</strong> austin@ontapmn.com</p>
                       <p><strong>Website:</strong>{' '}
                         <Link href="/contact" className="text-amber-600 hover:text-amber-700 underline">
                           Contact Form
