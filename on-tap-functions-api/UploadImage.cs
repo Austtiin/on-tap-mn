@@ -10,7 +10,6 @@ using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using System.Text.RegularExpressions;
 using System.Linq;
-using Microsoft.Data.SqlClient;
 
 namespace on_tap_functions_api
 {
@@ -122,70 +121,6 @@ namespace on_tap_functions_api
                 }
 
                 var imageUrl = blobClient.Uri.ToString();
-
-                // Save image reference to database
-                var sqlConnectionString = Environment.GetEnvironmentVariable("SQLConnectionString");
-                using (SqlConnection connection = new SqlConnection(sqlConnectionString))
-                {
-                    await connection.OpenAsync();
-
-                    // Create SubmissionImages table if it doesn't exist
-                    string createTableSql = @"
-                        IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'SubmissionImages')
-                        BEGIN
-                            CREATE TABLE SubmissionImages (
-                                ImageId UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
-                                SubmissionId UNIQUEIDENTIFIER NOT NULL,
-                                ImageType NVARCHAR(50) NOT NULL,
-                                BlobPath NVARCHAR(500) NOT NULL,
-                                BlobUrl NVARCHAR(1000) NOT NULL,
-                                UploadedAt DATETIMEOFFSET NOT NULL DEFAULT SYSUTCDATETIME(),
-                                FOREIGN KEY (SubmissionId) REFERENCES Submissions(SubmissionId)
-                            )
-                        END";
-
-                    using (SqlCommand createCmd = new SqlCommand(createTableSql, connection))
-                    {
-                        await createCmd.ExecuteNonQueryAsync();
-                    }
-
-                    // Check if submission exists
-                    string checkSql = "SELECT COUNT(*) FROM Submissions WHERE SubmissionId = @SubmissionId";
-                    using (SqlCommand checkCmd = new SqlCommand(checkSql, connection))
-                    {
-                        checkCmd.Parameters.AddWithValue("@SubmissionId", submissionId);
-                        int count = (int)await checkCmd.ExecuteScalarAsync();
-                        
-                        if (count == 0)
-                        {
-                            log.LogWarning($"Submission not found: {submissionId}");
-                            // Continue anyway - submission might be in process
-                        }
-                    }
-
-                    // Delete existing image of same type for this submission (replace if re-uploading)
-                    string deleteSql = "DELETE FROM SubmissionImages WHERE SubmissionId = @SubmissionId AND ImageType = @ImageType";
-                    using (SqlCommand deleteCmd = new SqlCommand(deleteSql, connection))
-                    {
-                        deleteCmd.Parameters.AddWithValue("@SubmissionId", submissionId);
-                        deleteCmd.Parameters.AddWithValue("@ImageType", imageType);
-                        await deleteCmd.ExecuteNonQueryAsync();
-                    }
-
-                    // Insert new image record
-                    string insertSql = @"
-                        INSERT INTO SubmissionImages (ImageId, SubmissionId, ImageType, BlobPath, BlobUrl, UploadedAt)
-                        VALUES (NEWID(), @SubmissionId, @ImageType, @BlobPath, @BlobUrl, SYSUTCDATETIME())";
-
-                    using (SqlCommand insertCmd = new SqlCommand(insertSql, connection))
-                    {
-                        insertCmd.Parameters.AddWithValue("@SubmissionId", submissionId);
-                        insertCmd.Parameters.AddWithValue("@ImageType", imageType);
-                        insertCmd.Parameters.AddWithValue("@BlobPath", blobPath);
-                        insertCmd.Parameters.AddWithValue("@BlobUrl", imageUrl);
-                        await insertCmd.ExecuteNonQueryAsync();
-                    }
-                }
 
                 log.LogInformation($"Image uploaded successfully: {imageUrl}");
 

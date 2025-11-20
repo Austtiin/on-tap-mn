@@ -129,26 +129,29 @@ export function ContactForm() {
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <FormInput
+            name="name"
             label="Your Name"
             required
             value={formData.name}
-            onChange={(e) => updateFormData('name', e.target.value)}
+            onChange={(value) => updateFormData('name', value)}
             error={errors.name}
             placeholder="John Doe"
           />
           
           <FormInput
+            name="email"
             label="Email Address"
             type="email"
             required
             value={formData.email}
-            onChange={(e) => updateFormData('email', e.target.value)}
+            onChange={(value) => updateFormData('email', value)}
             error={errors.email}
             placeholder="john@example.com"
           />
         </div>
 
         <FormSelect
+          name="category"
           label="Category"
           required
           options={categories}
@@ -159,21 +162,23 @@ export function ContactForm() {
         />
 
         <FormInput
+          name="subject"
           label="Subject"
           required
           value={formData.subject}
-          onChange={(e) => updateFormData('subject', e.target.value)}
+          onChange={(value) => updateFormData('subject', value)}
           error={errors.subject}
-          placeholder="Brief description of your message"
+          placeholder="Brief description of your inquiry"
         />
 
         <FormTextarea
+          name="message"
           label="Message"
           required
           value={formData.message}
-          onChange={(e) => updateFormData('message', e.target.value)}
+          onChange={(value) => updateFormData('message', value)}
           error={errors.message}
-          placeholder="Please provide as much detail as possible..."
+          placeholder="Please provide details about your inquiry..."
           rows={6}
         />
 
