@@ -1,10 +1,9 @@
 using System;
 using System.IO;
+using System.Net;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Http;
-using Microsoft.AspNetCore.Http;
+using Microsoft.Azure.Functions.Worker;
+using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Microsoft.Data.SqlClient;
@@ -13,7 +12,7 @@ using System.Linq;
 
 namespace on_tap_functions_api
 {
-    public static class SubmitEvent
+    public class SubmitEvent
     {
         // Sanitize string input - trim, normalize whitespace, prevent script injection
         private static string SanitizeString(string input)
@@ -65,12 +64,13 @@ namespace on_tap_functions_api
             return url;
         }
 
-        [FunctionName("SubmitEvent")]
-        public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req,
-            ILogger log)
+        [Function("SubmitEvent")]
+        public async Task<HttpResponseData> Run(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequestData req,
+            FunctionContext executionContext)
         {
-            log.LogInformation("SubmitEvent function processing a request.");
+            var logger = executionContext.GetLogger("SubmitEvent");
+            logger.LogInformation("SubmitEvent function processing a request.");
 
             try
             {
@@ -90,77 +90,95 @@ namespace on_tap_functions_api
                 // Validate required fields
                 if (string.IsNullOrEmpty(submission.SubmitName) || submission.SubmitName.Length < 2)
                 {
-                    return new BadRequestObjectResult(new { 
+                    var badResponse1 = req.CreateResponse(HttpStatusCode.BadRequest);
+                    await badResponse1.WriteAsJsonAsync(new { 
                         success = false, 
                         message = "Your name is required and must be at least 2 characters" 
                     });
+                    return badResponse1;
                 }
                 
                 if (string.IsNullOrEmpty(submission.SubmitEmail))
                 {
-                    return new BadRequestObjectResult(new { 
+                    var badResponse2 = req.CreateResponse(HttpStatusCode.BadRequest);
+                    await badResponse2.WriteAsJsonAsync(new { 
                         success = false, 
                         message = "Valid email address is required" 
                     });
+                    return badResponse2;
                 }
                 
                 if (string.IsNullOrEmpty(submission.VenueName) || submission.VenueName.Length < 2)
                 {
-                    return new BadRequestObjectResult(new { 
+                    var badResponse3 = req.CreateResponse(HttpStatusCode.BadRequest);
+                    await badResponse3.WriteAsJsonAsync(new { 
                         success = false, 
                         message = "Venue name must be at least 2 characters" 
                     });
+                    return badResponse3;
                 }
                 
                 if (string.IsNullOrEmpty(submission.VenueAddress) || submission.VenueAddress.Length < 5)
                 {
-                    return new BadRequestObjectResult(new { 
+                    var badResponse4 = req.CreateResponse(HttpStatusCode.BadRequest);
+                    await badResponse4.WriteAsJsonAsync(new { 
                         success = false, 
                         message = "Valid venue address is required" 
                     });
+                    return badResponse4;
                 }
                 
                 if (string.IsNullOrEmpty(submission.Title) || submission.Title.Length < 3)
                 {
-                    return new BadRequestObjectResult(new { 
+                    var badResponse5 = req.CreateResponse(HttpStatusCode.BadRequest);
+                    await badResponse5.WriteAsJsonAsync(new { 
                         success = false, 
                         message = "Event title must be at least 3 characters" 
                     });
+                    return badResponse5;
                 }
                 
                 if (string.IsNullOrEmpty(submission.Category))
                 {
-                    return new BadRequestObjectResult(new { 
+                    var badResponse6 = req.CreateResponse(HttpStatusCode.BadRequest);
+                    await badResponse6.WriteAsJsonAsync(new { 
                         success = false, 
                         message = "Event category is required" 
                     });
+                    return badResponse6;
                 }
 
                 // Validate category against allowed values
                 var allowedCategories = new[] { "Bar Bingo", "Meat Raffles", "Karaoke", "Trivia", "Live Music" };
                 if (!allowedCategories.Contains(submission.Category))
                 {
-                    return new BadRequestObjectResult(new { 
+                    var badResponse7 = req.CreateResponse(HttpStatusCode.BadRequest);
+                    await badResponse7.WriteAsJsonAsync(new { 
                         success = false, 
                         message = "Invalid event category" 
                     });
+                    return badResponse7;
                 }
                 
                 // Validate start date/time
                 if (!submission.StartDateTime.HasValue)
                 {
-                    return new BadRequestObjectResult(new { 
+                    var badResponse8 = req.CreateResponse(HttpStatusCode.BadRequest);
+                    await badResponse8.WriteAsJsonAsync(new { 
                         success = false, 
                         message = "Event start date and time is required" 
                     });
+                    return badResponse8;
                 }
                 
                 if (submission.StartDateTime.Value < DateTimeOffset.UtcNow.AddHours(-1))
                 {
-                    return new BadRequestObjectResult(new { 
+                    var badResponse9 = req.CreateResponse(HttpStatusCode.BadRequest);
+                    await badResponse9.WriteAsJsonAsync(new { 
                         success = false, 
                         message = "Event start date must be in the future" 
                     });
+                    return badResponse9;
                 }
 
                 // Validate description lengths
@@ -268,34 +286,35 @@ namespace on_tap_functions_api
                             emailCommand.Parameters.AddWithValue("@BodyHtml", emailBodyHtml);
 
                             await emailCommand.ExecuteNonQueryAsync();
-                            log.LogInformation("Confirmation email queued in database successfully");
+                            logger.LogInformation("Confirmation email queued in database successfully");
                         }
                     }
                 }
                 catch (Exception emailEx)
                 {
-                    log.LogWarning($"Failed to queue confirmation email: {emailEx.Message}");
+                    logger.LogWarning($"Failed to queue confirmation email: {emailEx.Message}");
                     // Continue anyway - email is not critical for submission
                 }
 
-                log.LogInformation($"Event submission created with ID: {submissionId}");
+                logger.LogInformation($"Event submission created with ID: {submissionId}");
 
-                return new OkObjectResult(new { 
+                var response = req.CreateResponse(HttpStatusCode.OK);
+                await response.WriteAsJsonAsync(new { 
                     success = true, 
                     submissionId = submissionId,
                     message = "Event submitted successfully. You'll receive a confirmation email shortly." 
                 });
+                return response;
             }
             catch (Exception ex)
             {
-                log.LogError($"Error processing submission: {ex.Message}");
-                return new ObjectResult(new { 
+                logger.LogError($"Error processing submission: {ex.Message}");
+                var errorResponse = req.CreateResponse(HttpStatusCode.InternalServerError);
+                await errorResponse.WriteAsJsonAsync(new { 
                     success = false, 
                     message = "An error occurred while processing your submission. Please try again." 
-                }) 
-                { 
-                    StatusCode = StatusCodes.Status500InternalServerError 
-                };
+                });
+                return errorResponse;
             }
         }
     }
