@@ -29,13 +29,33 @@ jobs:
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
+      - name: 'Install Azure Functions Core Tools'
+        shell: bash
+        run: |
+          npm install -g azure-functions-core-tools@4 --unsafe-perm true
+
       - name: 'Resolve Project Dependencies Using Dotnet'
         shell: bash
         run: |
           pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
-          dotnet build --configuration Release
-          dotnet publish --configuration Release --output ./output
+          dotnet restore
+          dotnet build --configuration Release --no-restore
+          dotnet publish --configuration Release --no-build --output ./output
           popd
+      
+      - name: 'Verify output structure'
+        shell: bash
+        run: |
+          echo "Listing output directory contents:"
+          ls -la ./${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output
+          echo "Checking for .azurefunctions directory:"
+          if [ -d "./${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output/.azurefunctions" ]; then
+            echo ".azurefunctions directory exists"
+            ls -la ./${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output/.azurefunctions
+          else
+            echo ".azurefunctions directory NOT found - creating it"
+            mkdir -p ./${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output/.azurefunctions
+          fi
       
       - name: Login to Azure
         uses: azure/login@v2
@@ -51,4 +71,6 @@ jobs:
           app-name: 'on-tap-functions'
           slot-name: 'Production'
           package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output'
+          scm-do-build-during-deployment: false
+          enable-oryx-build: false
           
