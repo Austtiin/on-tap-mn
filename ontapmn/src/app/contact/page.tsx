@@ -177,7 +177,7 @@ export default function ContactPage() {
                   </h3>
                   <p className="text-gray-800 leading-relaxed text-sm ml-9">
                     Visit our{' '}
-                    <Link href="/apply" className="text-primary hover:text-primary-dark font-medium underline">
+                    <Link href="/submit-event" className="text-primary hover:text-primary-dark font-medium underline">
                       Apply to List Events page
                     </Link>
                     {' '}and fill out the form with your business and event information. 

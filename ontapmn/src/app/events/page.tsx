@@ -428,7 +428,7 @@ export default function EventsPage() {
                   </Accordion>
                   <Box sx={{ display: 'flex', gap: 1, justifyContent: 'space-between' }}>
                     <Button variant="text" size="small" onClick={clearAll}>Reset</Button>
-                    <Link href="/apply" style={{ textDecoration: 'none' }}>
+                    <Link href="/submit-event" style={{ textDecoration: 'none' }}>
                       <Button variant="contained" size="small">Apply</Button>
                     </Link>
                   </Box>

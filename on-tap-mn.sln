@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "on-tap-functions-api", "on-tap-functions-api\on-tap-functions-api.csproj", "{B64D84D4-F77A-2A1D-E0AB-42DADB9CF413}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B64D84D4-F77A-2A1D-E0AB-42DADB9CF413}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B64D84D4-F77A-2A1D-E0AB-42DADB9CF413}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B64D84D4-F77A-2A1D-E0AB-42DADB9CF413}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B64D84D4-F77A-2A1D-E0AB-42DADB9CF413}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CF60757E-B0C9-43AA-8178-F6A8E836AA60}
+	EndGlobalSection
+EndGlobal

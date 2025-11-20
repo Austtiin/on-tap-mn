@@ -141,7 +141,7 @@ export function Navigation() {
               </Link>
             ))}
             {/* Primary CTA */}
-            <Link href="/apply" style={{ textDecoration: 'none' }}>
+            <Link href="/submit-event" style={{ textDecoration: 'none' }}>
               <Button
                 variant="contained"
                 sx={{ ml: 1, bgcolor: '#8b1538', '&:hover': { bgcolor: '#6b1028' }, color: '#fff', fontWeight: 700 }}
@@ -171,7 +171,7 @@ export function Navigation() {
                 </ListItem>
               ))}
               <ListItem disablePadding>
-                <Link href="/apply" style={{ textDecoration: 'none', width: '100%' }} onClick={() => setMobileMenuOpen(false)}>
+                <Link href="/submit-event" style={{ textDecoration: 'none', width: '100%' }} onClick={() => setMobileMenuOpen(false)}>
                   <ListItemButton>
                     <ListItemText primary="Submit Event" sx={{ '& .MuiListItemText-primary': { color: '#8b1538', fontWeight: 700 } }} />
                   </ListItemButton>

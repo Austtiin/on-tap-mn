@@ -1,28 +1,44 @@
-import { InputHTMLAttributes, TextareaHTMLAttributes, forwardRef } from 'react'
+import { forwardRef } from 'react'
 
 // Form Input Component
-interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
+interface FormInputProps {
   label: string
+  name: string
+  value: string
+  onChange: (value: string) => void
+  onBlur?: () => void
+  type?: string
   error?: string
   required?: boolean
+  helperText?: string
+  placeholder?: string
+  disabled?: boolean
+  className?: string
 }
 
 export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
-  ({ label, error, required, className = '', ...props }, ref) => {
+  ({ label, name, value, onChange, onBlur, type = 'text', error, required, helperText, placeholder, disabled, className = '' }, ref) => {
     return (
-      <div className="space-y-1">
+      <div className="space-y-1 mb-4" data-error={!!error}>
         <label className="block text-sm font-medium text-black">
           {label}
           {required && <span className="text-primary ml-1">*</span>}
         </label>
         <input
           ref={ref}
+          name={name}
+          type={type}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          onBlur={onBlur}
+          placeholder={placeholder}
+          disabled={disabled}
           className={`w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors text-black placeholder-gray-500 ${
-            error ? 'border-red-500' : ''
+            error ? 'border-red-500 focus:ring-red-500' : ''
           } ${className}`}
-          {...props}
         />
-        {error && <p className="text-red-500 text-sm">{error}</p>}
+        {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
+        {!error && helperText && <p className="text-gray-500 text-sm mt-1">{helperText}</p>}
       </div>
     )
   }
@@ -31,29 +47,44 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
 FormInput.displayName = 'FormInput'
 
 // Form Textarea Component
-interface FormTextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
+interface FormTextareaProps {
   label: string
+  name: string
+  value: string
+  onChange: (value: string) => void
+  onBlur?: () => void
   error?: string
   required?: boolean
+  helperText?: string
+  placeholder?: string
+  disabled?: boolean
+  rows?: number
+  className?: string
 }
 
 export const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
-  ({ label, error, required, className = '', ...props }, ref) => {
+  ({ label, name, value, onChange, onBlur, error, required, helperText, placeholder, disabled, rows = 4, className = '' }, ref) => {
     return (
-      <div className="space-y-1">
+      <div className="space-y-1 mb-4" data-error={!!error}>
         <label className="block text-sm font-medium text-black">
           {label}
           {required && <span className="text-primary ml-1">*</span>}
         </label>
         <textarea
           ref={ref}
+          name={name}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          onBlur={onBlur}
+          placeholder={placeholder}
+          disabled={disabled}
+          rows={rows}
           className={`w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors resize-y text-black placeholder-gray-500 ${
-            error ? 'border-red-500' : ''
+            error ? 'border-red-500 focus:ring-red-500' : ''
           } ${className}`}
-          rows={4}
-          {...props}
         />
-        {error && <p className="text-red-500 text-sm">{error}</p>}
+        {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
+        {!error && helperText && <p className="text-gray-500 text-sm mt-1">{helperText}</p>}
       </div>
     )
   }
@@ -64,6 +95,7 @@ FormTextarea.displayName = 'FormTextarea'
 // Form Select Component
 interface FormSelectProps {
   label: string
+  name: string
   error?: string
   required?: boolean
   options: { value: string; label: string }[]
@@ -74,6 +106,7 @@ interface FormSelectProps {
 
 export function FormSelect({ 
   label, 
+  name,
   error, 
   required, 
   options, 
@@ -82,16 +115,17 @@ export function FormSelect({
   placeholder = 'Select an option...' 
 }: FormSelectProps) {
   return (
-    <div className="space-y-1">
+    <div className="space-y-1 mb-4" data-error={!!error}>
       <label className="block text-sm font-medium text-black">
         {label}
         {required && <span className="text-primary ml-1">*</span>}
       </label>
       <select
+        name={name}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         className={`w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors text-black ${
-          error ? 'border-red-500' : ''
+          error ? 'border-red-500 focus:ring-red-500' : ''
         }`}
       >
         <option value="" className="text-gray-500">{placeholder}</option>
@@ -101,7 +135,7 @@ export function FormSelect({
           </option>
         ))}
       </select>
-      {error && <p className="text-red-500 text-sm">{error}</p>}
+      {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
     </div>
   )
 }

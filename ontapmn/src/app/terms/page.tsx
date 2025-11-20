@@ -331,7 +331,7 @@ export default function TermsPage() {
                       If you have any questions about these Terms of Service, please contact us:
                     </p>
                     <div className="space-y-2 text-gray-700">
-                      <p><strong>Email:</strong> legal@ontapmn.com</p>
+                      <p><strong>Email:</strong> Austin@ontapmn.com</p>
                       <p><strong>Website:</strong>{' '}
                         <Link href="/contact" className="text-amber-600 hover:text-amber-700 underline">
                           Contact Form

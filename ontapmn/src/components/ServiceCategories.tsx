@@ -287,7 +287,7 @@ export function ServiceCategories() {
           <Typography variant="body1" sx={{ color: 'text.secondary', mb: 3 }}>
             Want to get your events featured on OnTap MN?
           </Typography>
-          <Link href="/apply" style={{ textDecoration: 'none' }}>
+          <Link href="/submit-event" style={{ textDecoration: 'none' }}>
             <Button
               variant="contained"
               color="primary"

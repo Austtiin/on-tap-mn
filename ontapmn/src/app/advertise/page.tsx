@@ -310,7 +310,7 @@ export default function AdvertisePage() {
                     Get Started Today
                   </Button>
                 </Link>
-                <Link href="/apply">
+                <Link href="/submit-event">
                   <Button 
                     size="large"
                     variant="outlined"

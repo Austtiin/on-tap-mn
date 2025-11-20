@@ -191,7 +191,7 @@ export function HeroBanner() {
                   Find Events Near Me
                 </Button>
               </Link>
-              <Link href="/apply" style={{ textDecoration: 'none' }}>
+              <Link href="/submit-event" style={{ textDecoration: 'none' }}>
                 <Button
                   variant="outlined"
                   size="large"

@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "on_tap_functions_api": {
+      "commandName": "Project",
+      "commandLineArgs": "--port 7221",
+      "launchBrowser": false
+    }
+  }
+}

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { Navigation, Footer, Container, Section } from '../../components'
-import { SubmitEventForm } from './components/SubmitEventForm'
+import { EventSubmissionForm } from './components/EventSubmissionForm'
 
 export const metadata: Metadata = {
   title: 'Submit Your Event',
@@ -126,7 +126,7 @@ export default function SubmitEventPage() {
         <Section padding="lg">
           <Container>
             <div className="max-w-4xl mx-auto">
-              <SubmitEventForm />
+              <EventSubmissionForm />
             </div>
           </Container>
         </Section>
