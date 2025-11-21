@@ -20,23 +20,6 @@ jobs:
           submodules: true
           lfs: false
       
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-          cache: 'npm'
-          cache-dependency-path: ontapmn/package-lock.json
-          
-      - name: Install dependencies
-        run: |
-          cd ontapmn
-          npm ci
-          
-      - name: Build Next.js app
-        run: |
-          cd ontapmn  
-          npm run build
-          
       - name: Build And Deploy
         id: builddeploy
         uses: azure/static-web-apps-deploy@v1
@@ -44,12 +27,11 @@ jobs:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_ZEALOUS_HILL_084C26510 }}
           repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
           action: "upload"
-          skip_app_build: true
           ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
           # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
-          app_location: "ontapmn/out" # App source code path (the built static files)
-          api_location: "" # Api source code path - optional
-          output_location: "" # Built app content directory - optional (empty because we're pointing directly to built files)
+          app_location: "ontapmn" # App source code path
+          api_location: "on-tap-functions-api" # Api source code path
+          output_location: ".next" # Built app content directory for Next.js
           ###### End of Repository/Build Configurations ######
 
   close_pull_request_job:
@@ -62,5 +44,5 @@ jobs:
         uses: azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_ZEALOUS_HILL_084C26510 }}
-          app_location: "ontapmn/out"
+          app_location: "ontapmn"
           action: "close"
