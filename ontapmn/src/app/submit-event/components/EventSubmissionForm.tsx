@@ -381,7 +381,7 @@ export function EventSubmissionForm() {
           })() : null,
       }
 
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:7071/api'
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || '/api'
       
       const response = await fetch(`${apiUrl}/SubmitEvent`, {
         method: 'POST',
