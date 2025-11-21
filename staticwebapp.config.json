@@ -2,6 +2,7 @@
   "routes": [
     {
       "route": "/api/*",
+      "rewrite": "https://on-tap-functions.azurewebsites.net/api/{*}",
       "allowedRoles": ["anonymous"]
     }
   ],

@@ -30,7 +30,7 @@ jobs:
           ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
           # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
           app_location: "ontapmn" # App source code path
-          api_location: "on-tap-functions-api" # Api source code path
+          api_location: "" # Empty for Next.js - Functions deployed separately
           output_location: ".next" # Built app content directory for Next.js
           ###### End of Repository/Build Configurations ######
 
