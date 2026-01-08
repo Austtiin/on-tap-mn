@@ -34,8 +34,10 @@ const CATEGORY_DEFS: Array<{ key: Category; icon: React.ElementType; color: stri
   { key: 'Live Music', icon: MusicNoteIcon, color: '#16a34a' },
 ]
 
-type TimeKey = 'morning' | 'midday' | 'evening' | 'latenight'
+type TimeKey = 'postmidnight' | 'earlymorning' | 'morning' | 'midday' | 'evening' | 'latenight'
 const TIME_RANGES: Record<TimeKey, { label: string; start: number; end: number }> = {
+  postmidnight: { label: '1am – 3am', start: 1 * 60, end: 3 * 60 },
+  earlymorning: { label: '6am – 8am', start: 6 * 60, end: 8 * 60 },
   morning: { label: '9am – 11am', start: 9 * 60, end: 11 * 60 },
   midday: { label: '12pm – 3pm', start: 12 * 60, end: 15 * 60 },
   evening: { label: '6pm – 9pm', start: 18 * 60, end: 21 * 60 },
@@ -347,7 +349,7 @@ export default function EventsPage() {
                   <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 0.5 }}>
                     Filters
                   </Typography>
-                  <Accordion disableGutters sx={{ bgcolor: 'transparent', boxShadow: 'none' }}>
+                  <Accordion disableGutters sx={{ bgcolor: 'transparent', boxShadow: 'none' }} defaultExpanded>
                     <AccordionSummary expandIcon={<ExpandMoreIcon fontSize="small" />}> 
                       <Typography variant="caption" sx={{ fontWeight: 600 }}>Categories</Typography>
                       <Box sx={{ ml: 'auto' }}>
@@ -638,7 +640,7 @@ export default function EventsPage() {
           </Box>
           <Box sx={{ p: 2, pt: 0 }}>
             {/* Reuse the same controls */}
-            <Accordion disableGutters sx={{ bgcolor: 'transparent', boxShadow: 'none' }}>
+            <Accordion disableGutters sx={{ bgcolor: 'transparent', boxShadow: 'none' }} defaultExpanded>
               <AccordionSummary expandIcon={<ExpandMoreIcon fontSize="small" />}> 
                 <Typography variant="caption" sx={{ fontWeight: 600 }}>Categories</Typography>
                 <Box sx={{ ml: 'auto' }}>

@@ -74,6 +74,7 @@ export default function SubmitEventPage() {
                 <Button
                   variant="contained"
                   size="large"
+                  href="https://events.ontap-mn.com"
                   sx={{
                     bgcolor: '#f59e0b',
                     '&:hover': { bgcolor: '#d97706' },
@@ -87,7 +88,7 @@ export default function SubmitEventPage() {
                   Login with SSO
                 </Button>
                 <p className="text-sm text-gray-500 mt-6">
-                  Don&apos;t have access? <Link href="/contact" className="text-amber-600 hover:text-amber-700 font-semibold">Contact us</Link> to get started.
+                  Can&apos;t get access? <Link href="/contact" className="text-amber-600 hover:text-amber-700 font-semibold">Contact us</Link> to get help.
                 </p>
               </div>
 
