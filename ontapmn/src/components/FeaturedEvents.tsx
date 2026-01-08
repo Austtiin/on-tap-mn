@@ -56,7 +56,7 @@ export function FeaturedEvents() {
     <Box 
       component="section" 
       sx={{ 
-        py: { xs: 8, lg: 10 },
+        py: { xs: 3, md: 4 },
         position: 'relative',
         background: 'linear-gradient(180deg, #fef3e0 0%, #fffbeb 50%, #ffffff 100%)',
         '&::before': {
@@ -113,11 +113,11 @@ export function FeaturedEvents() {
       />
 
       <Container maxWidth="lg">
-        <Box sx={{ textAlign: 'center', mb: 6 }}>
+        <Box sx={{ textAlign: 'center', mb: 3 }}>
           <Typography
             variant="h2"
             sx={{
-              fontSize: { xs: '1.75rem', lg: '1.875rem' },
+              fontSize: { xs: '1.5rem', lg: '1.75rem' },
               fontWeight: 'bold',
               color: '#7c2d12',
               mb: 2,
@@ -143,7 +143,7 @@ export function FeaturedEvents() {
           sx={{
             display: 'grid',
             gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' },
-            gap: 4,
+            gap: 3,
             justifyItems: 'center',
           }}
         >
@@ -153,7 +153,7 @@ export function FeaturedEvents() {
                 sx={{
                   height: '100%',
                   width: '100%',
-                  maxWidth: 380,
+                  maxWidth: 340,
                   display: 'flex',
                   flexDirection: 'column',
                   border: 2,
@@ -186,7 +186,7 @@ export function FeaturedEvents() {
                 {/* Event Image Placeholder */}
                 <Box
                   sx={{
-                    height: 192,
+                      height: 160,
                     background: 'linear-gradient(to bottom right, #8b1538, #6b1028)',
                     position: 'relative',
                     overflow: 'hidden',
@@ -224,7 +224,7 @@ export function FeaturedEvents() {
                   </Box>
                 </Box>
 
-                <CardContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', p: 3 }}>
+                <CardContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', p: 2 }}>
                   <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', mb: 1.5 }}>
                     <Typography
                       variant="caption"
@@ -256,7 +256,7 @@ export function FeaturedEvents() {
                     sx={{
                       fontWeight: 'bold',
                       color: 'text.primary',
-                      mb: 2,
+                      mb: 1.5,
                       display: '-webkit-box',
                       WebkitLineClamp: 2,
                       WebkitBoxOrient: 'vertical',
@@ -290,10 +290,10 @@ export function FeaturedEvents() {
                     variant="body2"
                     sx={{
                       color: 'text.primary',
-                      lineHeight: 1.7,
-                      mb: 2,
+                      lineHeight: 1.6,
+                      mb: 1.5,
                       display: '-webkit-box',
-                      WebkitLineClamp: 3,
+                      WebkitLineClamp: 2,
                       WebkitBoxOrient: 'vertical',
                       overflow: 'hidden',
                     }}
@@ -316,9 +316,9 @@ export function FeaturedEvents() {
         </Box>
 
         {/* View All Events Button */}
-        <Box sx={{ textAlign: 'center', mt: 5 }}>
+        <Box sx={{ textAlign: 'center', mt: 3 }}>
           <Link href="/events" style={{ textDecoration: 'none' }}>
-            <Button variant="outlined" color="primary" size="large">
+            <Button variant="outlined" color="primary" size="medium">
               View All Special Events
             </Button>
           </Link>

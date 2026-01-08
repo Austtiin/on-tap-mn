@@ -119,7 +119,7 @@ export function HeroBanner() {
                 component="img"
                 src="/logos/ontapMNlogo.webp"
                 alt="OnTap MN Logo"
-                sx={{ width: { xs: 220, md: 350, lg: 400 }, height: { xs: 220, md: 350, lg: 400 }, objectFit: 'contain' }}
+                sx={{ width: { xs: 180, md: 280, lg: 320 }, height: { xs: 180, md: 280, lg: 320 }, objectFit: 'contain' }}
               />
             </Box>
 
@@ -208,7 +208,7 @@ export function HeroBanner() {
                     transition: 'all 0.3s ease',
                   }}
                 >
-                  Submit Your Event
+                  Submit an Event
                 </Button>
               </Link>
             </Stack>

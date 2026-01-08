@@ -16,30 +16,38 @@ export default function AdvertisePage() {
       <main className="min-h-screen">
         {/* Hero Section */}
         <Section padding="lg" background="primary">
+          <div className="absolute inset-0 z-0">
+            <div className="absolute inset-0 bg-cover bg-center" style={{backgroundImage: 'url(/imgs/pexels-mart-production-7271399.jpg)'}} />
+            <div className="absolute inset-0 bg-gradient-to-br from-slate-900/85 via-slate-800/80 to-slate-900/85" />
+          </div>
           <Container>
-            <div className="text-center text-white relative">
-              <div className="absolute -top-8 left-1/2 -translate-x-1/2 w-24 h-24 bg-white/10 rounded-full blur-3xl"></div>
-              <div className="relative">
-                <div className="inline-block bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-semibold mb-6 border border-white/30">
-                  <span className="mr-2">🚀</span>
-                  Grow Your Event with OnTap MN
-                </div>
-                <h1 className="text-4xl lg:text-5xl font-bold mb-6 bg-gradient-to-r from-white via-amber-50 to-white bg-clip-text text-transparent drop-shadow-lg">
-                  Advertise with OnTap MN
-                </h1>
-                <p className="text-lg lg:text-xl text-gray-100 max-w-3xl mx-auto leading-relaxed">
-                  Partner with us to promote your events and connect with customers who are actively looking for great bar entertainment
-                </p>
-                <div className="mt-8 flex justify-center gap-4 flex-wrap">
-                  <div className="bg-white/20 backdrop-blur-sm px-6 py-3 rounded-full border border-white/30">
-                    <span className="text-2xl font-bold"></span>
-                    <span className="text-sm ml-2 text-gray-100">Regular Monthly Visitors</span>
-                  </div>
-                  <div className="bg-white/20 backdrop-blur-sm px-6 py-3 rounded-full border border-white/30">
-                    <span className="text-2xl font-bold"></span>
-                    <span className="text-sm ml-2 text-gray-100">Listed Events</span>
-                  </div>
-                </div>
+            <div className="text-center text-white relative z-10">
+              {/* Decorative overlays */}
+              <div className="pointer-events-none absolute inset-0 opacity-30">
+                <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-[120px] h-[120px] rounded-full bg-gradient-to-br from-amber-400/40 to-amber-600/30 blur-2xl" />
+                <div className="absolute top-6 right-10 w-16 h-16 rounded-full border border-amber-300/30" />
+                <div className="absolute bottom-8 left-12 w-10 h-10 rounded-full border border-amber-200/30" />
+                <div className="absolute bottom-10 right-1/4 w-24 h-24 rounded-full bg-white/5" />
+              </div>
+
+              {/* Small badge */}
+              <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white px-3 py-1 rounded-full text-xs tracking-wide mb-4 backdrop-blur-sm">
+                <span className="mr-2">🚀</span>
+                Grow Your Event with OnTap MN
+              </div>
+
+              <h1 className="text-3xl lg:text-4xl font-bold mb-3">
+                Advertise with OnTap MN
+              </h1>
+              <p className="text-lg lg:text-xl text-gray-100 max-w-3xl mx-auto leading-relaxed">
+                Partner with us to promote your events and connect with customers who are actively looking for great bar entertainment
+              </p>
+
+              {/* Chips */}
+              <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
+                <span className="text-[11px] uppercase tracking-wider bg-white/10 border border-white/20 px-3 py-1 rounded-full">Targeted Audience</span>
+                <span className="text-[11px] uppercase tracking-wider bg-white/10 border border-white/20 px-3 py-1 rounded-full">Free Exposure</span>
+                <span className="text-[11px] uppercase tracking-wider bg-white/10 border border-white/20 px-3 py-1 rounded-full">Proven Results</span>
               </div>
             </div>
           </Container>
@@ -206,7 +214,8 @@ export default function AdvertisePage() {
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-12">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
+                {/* Banner-only Advertisement */}
                 <div className="bg-gradient-to-br from-white to-amber-50 rounded-xl shadow-md p-6 md:p-8 border border-amber-100 hover:shadow-xl transition-all duration-300">
                   <div className="mb-6">
                     <div className="flex items-center mb-4">
@@ -215,10 +224,10 @@ export default function AdvertisePage() {
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
                       </div>
-                      <h3 className="text-xl font-bold text-gray-900">Banner Advertising</h3>
+                      <h3 className="text-xl font-bold text-gray-900">Banner-only Advertisement</h3>
                     </div>
                     <p className="text-gray-700 leading-relaxed text-sm">
-                      Premium placement of your business banner across high-traffic pages on OnTap MN.
+                      Top-of-page banner placement across high-traffic pages. No featured pin included.
                     </p>
                   </div>
                   <ul className="space-y-2 text-gray-700 mb-6">
@@ -228,7 +237,7 @@ export default function AdvertisePage() {
                     </li>
                     <li className="flex items-start">
                       <span className="text-amber-500 mr-2 mt-0.5" aria-hidden="true">✓</span>
-                      <span className="text-sm">Category page visibility</span>
+                      <span className="text-sm">High-visibility pages</span>
                     </li>
                     <li className="flex items-start">
                       <span className="text-amber-500 mr-2 mt-0.5" aria-hidden="true">✓</span>
@@ -236,11 +245,47 @@ export default function AdvertisePage() {
                     </li>
                   </ul>
                   <div className="text-center pt-4 border-t border-amber-100">
-                    <div className="text-2xl font-bold bg-gradient-to-r from-amber-500 to-amber-600 bg-clip-text text-transparent mb-2">$10/week</div>
-                    <div className="text-gray-600 text-sm">1-month minimum commitment</div>
+                    <div className="text-2xl font-bold bg-gradient-to-r from-amber-500 to-amber-600 bg-clip-text text-transparent mb-2">$50</div>
+                    <div className="text-gray-600 text-sm">4-week commitment</div>
                   </div>
                 </div>
 
+                {/* Featured Event Advertisement */}
+                <div className="bg-gradient-to-br from-white to-amber-50 rounded-xl shadow-md p-6 md:p-8 border border-amber-100 hover:shadow-xl transition-all duration-300">
+                  <div className="mb-6">
+                    <div className="flex items-center mb-4">
+                      <div className="bg-gradient-to-br from-amber-500 to-amber-600 text-white rounded-full w-10 h-10 flex items-center justify-center mr-3 shadow-lg">
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                      </div>
+                      <h3 className="text-xl font-bold text-gray-900">Featured Event Advertisement</h3>
+                    </div>
+                    <p className="text-gray-700 leading-relaxed text-sm">
+                      Includes a banner plus a pinned Featured Event on the Events page.
+                    </p>
+                  </div>
+                  <ul className="space-y-2 text-gray-700 mb-6">
+                    <li className="flex items-start">
+                      <span className="text-amber-500 mr-2 mt-0.5" aria-hidden="true">✓</span>
+                      <span className="text-sm">Pinned Featured Event on Events page</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-amber-500 mr-2 mt-0.5" aria-hidden="true">✓</span>
+                      <span className="text-sm">Banner placement included</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-amber-500 mr-2 mt-0.5" aria-hidden="true">✓</span>
+                      <span className="text-sm">Priority visibility across event listings</span>
+                    </li>
+                  </ul>
+                  <div className="text-center pt-4 border-t border-amber-100">
+                    <div className="text-2xl font-bold bg-gradient-to-r from-amber-500 to-amber-600 bg-clip-text text-transparent mb-2">$75</div>
+                    <div className="text-gray-600 text-sm">4-week commitment</div>
+                  </div>
+                </div>
+
+                {/* Premium Event Boost */}
                 <div className="bg-gradient-to-br from-amber-50 to-white rounded-xl shadow-lg p-6 md:p-8 border-2 border-amber-400 hover:shadow-2xl transition-all duration-300 relative overflow-hidden">
                   <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-amber-400/20 to-transparent rounded-bl-full"></div>
                   <div className="relative z-10">
@@ -251,36 +296,32 @@ export default function AdvertisePage() {
                       <div className="flex items-center mb-4">
                         <div className="bg-gradient-to-br from-amber-500 to-amber-600 text-white rounded-full w-10 h-10 flex items-center justify-center mr-3 shadow-lg">
                           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M7 8h10M7 12h10M7 16h10" />
                           </svg>
                         </div>
-                        <h3 className="text-xl font-bold text-gray-900">Sponsored Events</h3>
+                        <h3 className="text-xl font-bold text-gray-900">Premium Event Boost</h3>
                       </div>
                       <p className="text-gray-700 leading-relaxed text-sm">
-                        Feature your events prominently and get priority placement in search results.
+                        Everything in Featured plus dedicated Google Ads pushes for your event and brand.
                       </p>
                     </div>
                     <ul className="space-y-2 text-gray-700 mb-6">
                       <li className="flex items-start">
                         <span className="text-amber-500 mr-2 mt-0.5" aria-hidden="true">✓</span>
-                        <span className="text-sm">Featured event highlighting</span>
+                        <span className="text-sm">Banner across high-traffic pages</span>
                       </li>
                       <li className="flex items-start">
                         <span className="text-amber-500 mr-2 mt-0.5" aria-hidden="true">✓</span>
-                        <span className="text-sm">Top search result placement</span>
+                        <span className="text-sm">Pinned Featured Event</span>
                       </li>
                       <li className="flex items-start">
                         <span className="text-amber-500 mr-2 mt-0.5" aria-hidden="true">✓</span>
-                        <span className="text-sm">Social media promotion</span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="text-amber-500 mr-2 mt-0.5" aria-hidden="true">✓</span>
-                        <span className="text-sm">Enhanced event details</span>
+                        <span className="text-sm">Dedicated Google Ads pushes</span>
                       </li>
                     </ul>
                     <div className="text-center pt-4 border-t border-amber-200">
-                      <div className="text-2xl font-bold bg-gradient-to-r from-amber-500 to-amber-600 bg-clip-text text-transparent mb-2">$50 per event</div>
-                      <div className="text-gray-600 text-sm">1-month minimum commitment</div>
+                      <div className="text-2xl font-bold bg-gradient-to-r from-amber-500 to-amber-600 bg-clip-text text-transparent mb-2">$150</div>
+                      <div className="text-gray-600 text-sm">4-week commitment</div>
                     </div>
                   </div>
                 </div>

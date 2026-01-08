@@ -20,7 +20,7 @@ const footerLinks = {
     { name: 'About Us', href: '/about' },
     { name: 'Contact', href: '/contact' },
     { name: 'Advertise', href: '/advertise' },
-    { name: 'Submit Your Event', href: '/submit-event' },
+    { name: 'Event Portal', href: '/submit-event' },
   ],
   'Legal': [
     { name: 'Privacy Policy', href: '/privacy' },

@@ -192,7 +192,8 @@ export function ContactForm() {
               <ul className="space-y-1 text-yellow-700">
                 <li>• Check our FAQ section below for common questions</li>
                 <li>• For event submissions, use our dedicated{' '}
-                  <a href="/submit-event" className="text-primary hover:underline">Submit Your Event form</a>
+                  <a href="/submit-event" className="text-primary hover:underline">Event Portal</a>
+                  {' '}instead.
                 </li>
                 <li>• Include relevant details to help us assist you better</li>
               </ul>

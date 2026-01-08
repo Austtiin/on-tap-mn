@@ -29,9 +29,9 @@ export default function Home() {
           </Container>
         </Section>
 
-        <ServiceCategories />
-
         <FeaturedEvents />
+
+        <ServiceCategories />
         
         {/* AdSense - Bottom Banner */}
         <Section padding="sm" background="gray">

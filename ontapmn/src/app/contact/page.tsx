@@ -16,22 +16,40 @@ export default function ContactPage() {
       <main className="min-h-screen">
         {/* Hero Section */}
         <Section padding="lg" background="primary">
+          <div className="absolute inset-0 z-0">
+            <div className="absolute inset-0 bg-cover bg-center" style={{backgroundImage: 'url(/imgs/pexels-quyn-ph-m-255082234-13418612.jpg)'}} />
+            <div className="absolute inset-0 bg-gradient-to-br from-slate-900/85 via-slate-800/80 to-slate-900/85" />
+          </div>
           <Container>
-            <div className="text-center text-white relative">
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-white/5 rounded-full blur-3xl"></div>
-              <div className="relative">
-                <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-5 py-2.5 rounded-full text-sm font-semibold mb-6 border border-white/30">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                  </svg>
-                  <span>We&apos;re Here to Help</span>
-                </div>
-                <h1 className="text-4xl lg:text-5xl font-bold mb-6">
-                  Contact Us
-                </h1>
-                <p className="text-lg lg:text-xl text-gray-100 max-w-3xl mx-auto leading-relaxed">
-                  Have questions, suggestions, or feedback? We&apos;d love to hear from you!
-                </p>
+            <div className="text-center text-white relative z-10">
+              {/* Decorative overlays */}
+              <div className="pointer-events-none absolute inset-0 opacity-30">
+                <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-[120px] h-[120px] rounded-full bg-gradient-to-br from-amber-400/40 to-amber-600/30 blur-2xl" />
+                <div className="absolute top-6 right-10 w-16 h-16 rounded-full border border-amber-300/30" />
+                <div className="absolute bottom-8 left-12 w-10 h-10 rounded-full border border-amber-200/30" />
+                <div className="absolute bottom-10 right-1/4 w-24 h-24 rounded-full bg-white/5" />
+              </div>
+
+              {/* Small badge */}
+              <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white px-3 py-1 rounded-full text-xs tracking-wide mb-4 backdrop-blur-sm">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                <span>We&apos;re Here to Help</span>
+              </div>
+
+              <h1 className="text-3xl lg:text-4xl font-bold mb-3">
+                Contact Us
+              </h1>
+              <p className="text-lg lg:text-xl text-gray-100 max-w-3xl mx-auto leading-relaxed">
+                Have questions, suggestions, or feedback? We&apos;d love to hear from you!
+              </p>
+
+              {/* Chips */}
+              <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
+                <span className="text-[11px] uppercase tracking-wider bg-white/10 border border-white/20 px-3 py-1 rounded-full">Quick Response</span>
+                <span className="text-[11px] uppercase tracking-wider bg-white/10 border border-white/20 px-3 py-1 rounded-full">24/7 Support</span>
+                <span className="text-[11px] uppercase tracking-wider bg-white/10 border border-white/20 px-3 py-1 rounded-full">Here to Help</span>
               </div>
             </div>
           </Container>
@@ -178,7 +196,7 @@ export default function ContactPage() {
                   <p className="text-gray-800 leading-relaxed text-sm ml-9">
                     Visit our{' '}
                     <Link href="/submit-event" className="text-primary hover:text-primary-dark font-medium underline">
-                      Apply to List Events page
+                      Event Portal page
                     </Link>
                     {' '}and fill out the form with your business and event information. 
                     It&apos;s completely free and takes just a few minutes!

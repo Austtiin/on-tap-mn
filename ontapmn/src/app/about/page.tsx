@@ -15,8 +15,12 @@ export default function AboutPage() {
       <main className="min-h-screen">
         {/* Hero Section */}
         <Section padding="lg" background="dark" edges="bottom">
+          <div className="absolute inset-0 z-0">
+            <div className="absolute inset-0 bg-cover bg-center" style={{backgroundImage: 'url(/imgs/pexels-mart-production-7271399.jpg)'}} />
+            <div className="absolute inset-0 bg-gradient-to-br from-slate-900/85 via-slate-800/80 to-slate-900/85" />
+          </div>
           <Container>
-            <div className="relative text-center text-white">
+            <div className="relative text-center text-white z-10">
               {/* Decorative overlays */}
               <div className="pointer-events-none absolute inset-0 opacity-30">
                 <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-[120px] h-[120px] rounded-full bg-gradient-to-br from-amber-400/40 to-amber-600/30 blur-2xl" />
@@ -162,7 +166,7 @@ export default function AboutPage() {
                     <div className="mb-4 rounded-lg border border-amber-100 bg-amber-50/40 p-4 text-amber-900 text-sm leading-relaxed">
                       <div className="flex items-start">
                         <span className="mr-2 text-amber-600 text-lg">“</span>
-                        <p className="flex-1">OnTap MN is dedicated to Minnesota’s bar culture—simple, helpful, and built for locals. If it helps just one more person find a great night out, it’s worth it.</p>
+                        <p className="flex-1">OnTap MN is dedicated to Minnesota’s bar culture - simple, helpful, and built for locals. If it helps just one more person find a great night out, it’s worth it.</p>
                       </div>
                     </div>
                     <div className="space-y-4 text-gray-700 leading-relaxed text-[15px]">
@@ -281,7 +285,7 @@ export default function AboutPage() {
                   href="/submit-event"
                   className="bg-secondary hover:bg-secondary-dark text-black font-semibold px-8 py-3 rounded-lg transition-colors duration-200 text-center"
                 >
-                  Submit Your Event
+                  Submit an Event
                 </Link>
                 <Link 
                   href="/"

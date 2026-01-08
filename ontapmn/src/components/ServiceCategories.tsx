@@ -285,7 +285,7 @@ export function ServiceCategories() {
         {/* Call to Action */}
         <Box sx={{ textAlign: 'center', mt: 5 }}>
           <Typography variant="body1" sx={{ color: 'text.secondary', mb: 3 }}>
-            Want to get your events featured on OnTap MN?
+            Have events to share? Log into the event portal now and submit your event. Once approved, it will be immediately listed to be discovered by everyone!
           </Typography>
           <Link href="/submit-event" style={{ textDecoration: 'none' }}>
             <Button
@@ -294,7 +294,7 @@ export function ServiceCategories() {
               size="large"
               sx={{ px: 3, py: 1.5 }}
             >
-              Apply to List Your Events
+              Login to Event Portal
             </Button>
           </Link>
         </Box>
