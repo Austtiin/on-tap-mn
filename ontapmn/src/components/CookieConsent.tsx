@@ -234,19 +234,19 @@ export function CookieConsent() {
               <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto lg:flex-shrink-0">
                 <button
                   onClick={handleDeclineAll}
-                  className="px-6 py-3 bg-gray-700 hover:bg-gray-600 text-white font-semibold rounded-lg transition-all duration-200 border border-gray-600 hover:border-gray-500 shadow-md hover:shadow-lg"
+                  className="px-6 py-3 bg-gray-700 hover:bg-gray-600 text-white font-semibold rounded-lg transition-all duration-200 border border-gray-600 hover:border-gray-500 shadow-md hover:shadow-lg cursor-pointer"
                 >
                   Decline All
                 </button>
                 <button
                   onClick={() => setShowCustomize(true)}
-                  className="px-6 py-3 bg-gray-600 hover:bg-gray-500 text-white font-semibold rounded-lg transition-all duration-200 border border-gray-500 hover:border-gray-400 shadow-md hover:shadow-lg"
+                  className="px-6 py-3 bg-gray-600 hover:bg-gray-500 text-white font-semibold rounded-lg transition-all duration-200 border border-gray-500 hover:border-gray-400 shadow-md hover:shadow-lg cursor-pointer"
                 >
                   Customize
                 </button>
                 <button
                   onClick={handleAcceptAll}
-                  className="px-6 py-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-semibold rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                  className="px-6 py-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-semibold rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 cursor-pointer"
                 >
                   Accept All
                 </button>
@@ -303,7 +303,7 @@ export function CookieConsent() {
                     </div>
                     <button
                       onClick={() => setPreferences(prev => ({ ...prev, analytics: !prev.analytics }))}
-                      className="flex-shrink-0"
+                      className="flex-shrink-0 cursor-pointer"
                       aria-label="Toggle Analytics Cookies"
                     >
                       <div className={`w-12 h-6 rounded-full relative transition-colors ${
@@ -331,7 +331,7 @@ export function CookieConsent() {
                     </div>
                     <button
                       onClick={() => setPreferences(prev => ({ ...prev, marketing: !prev.marketing }))}
-                      className="flex-shrink-0"
+                      className="flex-shrink-0 cursor-pointer"
                       aria-label="Toggle Marketing Cookies"
                     >
                       <div className={`w-12 h-6 rounded-full relative transition-colors ${
@@ -350,13 +350,13 @@ export function CookieConsent() {
               <div className="flex flex-col sm:flex-row gap-3 justify-end">
                 <button
                   onClick={handleDeclineAll}
-                  className="px-6 py-3 bg-gray-700 hover:bg-gray-600 text-white font-semibold rounded-lg transition-all duration-200 border border-gray-600 hover:border-gray-500"
+                  className="px-6 py-3 bg-gray-700 hover:bg-gray-600 text-white font-semibold rounded-lg transition-all duration-200 border border-gray-600 hover:border-gray-500 cursor-pointer"
                 >
                   Decline All
                 </button>
                 <button
                   onClick={handleSaveCustom}
-                  className="px-6 py-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-semibold rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl"
+                  className="px-6 py-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-semibold rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl cursor-pointer"
                 >
                   Save Preferences
                 </button>
@@ -370,7 +370,7 @@ export function CookieConsent() {
       {!showCustomize && (
         <button
           onClick={handleDeclineAll}
-          className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
+          className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors cursor-pointer"
           aria-label="Close"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
